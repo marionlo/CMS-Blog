@@ -37,7 +37,7 @@
                             }
                             
                             ?>
-
+                            <!-- Add Category Form -->
                             <form action="" method="post">
                                 <div class="form-group">
                                     <label for="cat-title">Add Category</label>
@@ -46,10 +46,18 @@
                                 <div class="form-group">
                                     <input class="btn btn-primary" type="submit" name="submit" value="Add Category">
                                 </div>
-
                             </form>
-                        </div><!-- Add Category Form -->
+
+                            <?php 
                         
+                        if(isset($_GET['edit'])) {
+                            $cat_id = $_GET['edit'];
+                            include "includes/edit_categories.php";
+                        }
+                        
+                        ?>
+                        </div>
+
                     <div class="col-xs-6">
 
                         <table class="table table-bordered">
@@ -73,6 +81,7 @@
                              echo "<td>{$cat_id}</td>";   
                              echo "<td>{$cat_title}</td>";
                              echo "<td><a href='categories.php?delete={$cat_id}'>Delete</a></td>";
+                             echo "<td><a href='categories.php?edit={$cat_id}'>Edit</a></td>";
                              echo "</tr>";
                     } ?>
                              <?php 
