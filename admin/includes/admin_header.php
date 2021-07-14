@@ -1,4 +1,5 @@
 <?php include "../includes/header.php" ?>
+<?php include "../includes/db.php";?>
 <!DOCTYPE html>
 <html lang="en">
 
