@@ -28,16 +28,8 @@
                         include "includes/add_post.php";
                         break;
 
-                        case '2';
-                        echo "Text";
-                        break;
-
-                        case '3';
-                        echo "Text";
-                        break;
-
-                        case '4';
-                        echo "Text";
+                        case 'edit_post';
+                        include "includes/edit_post.php";
                         break;
                        
                         default: 

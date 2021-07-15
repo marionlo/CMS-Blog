@@ -29,7 +29,7 @@
                                 </div>
                             </form>
 
-                            <?php // Update and include query
+                            <?php // Include the edit form when we click on the edit button
                         
                         if(isset($_GET['edit'])) {
                             $cat_id = $_GET['edit'];
