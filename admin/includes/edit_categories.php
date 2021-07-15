@@ -15,7 +15,7 @@
                                  <input class="form-control" type="text" name="cat_title" value="<?php if(isset($cat_title)){ echo $cat_title;} ?>">
                                    <?php }} ?>
 
-                                   <?php //Update Query
+                                   <?php //Update the category into the DB
                                     if(isset($_POST['update_category'])) {
                                         $the_cat_title = $_POST['cat_title'];
                                         $query = "UPDATE categories SET cat_title = '{$the_cat_title}' WHERE cat_id = {$cat_id} ";
