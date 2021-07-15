@@ -1,4 +1,11 @@
 <?php 
+function confirm($result) {
+    global $connection; 
+    if(!$result) {
+        die("QUERY FAILED" . mysqli_error($connection));
+    }
+}
+
 // Add a category feature 
 function insert_categories() {
     global $connection;
@@ -46,5 +53,7 @@ function deleteCategories() {
         header("Location: categories.php"); //This will refresh the page
     }
 }
+
+
 
 ?>
