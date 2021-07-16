@@ -18,7 +18,7 @@ if(isset($_POST['create_post'])) {
 
 
     //Pass the variables from the form into the query
-    $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status) ";
+    $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status) ";
     $query .="VALUES({$post_category_id},'{$post_title}','{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_status}' ) ";
     //Send the query
     $create_post_query = mysqli_query($connection, $query);

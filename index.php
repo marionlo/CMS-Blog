@@ -15,7 +15,7 @@
 
             <?php 
             
-            $query = "SELECT * FROM posts";
+            $query = "SELECT * FROM posts WHERE post_status = 'published'";
             $select_all_posts_query = mysqli_query($connection, $query);
 
                     while($row = mysqli_fetch_assoc($select_all_posts_query)) {
@@ -25,6 +25,7 @@
                         $post_date = $row['post_date'];
                         $post_image = $row['post_image'];
                         $post_content = substr($row['post_content'],0,150);
+                        $post_status = $row['post_status'];
 
                         ?>
 
@@ -51,11 +52,10 @@
 
                 <hr>
 
-
-
-
-
-                    <?php } ?>
+                    <?php } if (mysqli_num_rows($select_all_posts_query)==0) {
+                            echo "<h1 class='text-center'>There is no post published yet</h1>";
+                            // Displays a message if there is no post published yet
+                        } ?>
 
             </div>
 

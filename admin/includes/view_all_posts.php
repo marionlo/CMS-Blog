@@ -10,6 +10,8 @@
                                     <th>Tags</th>
                                     <th>Comments</th>
                                     <th>Date</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,6 +47,7 @@
                                 echo "<td><img src='../images/$post_image'  width='100' alt='{$post_title}'/></td>";
                                 echo "<td>{$post_tags}</td>";
 
+                                // Display the number of comments
                                 $query = "SELECT * FROM comments WHERE comment_post_id = $post_id ";
                                 $send_comment_query = mysqli_query($connection, $query);
                                 $count_comments = mysqli_num_rows($send_comment_query);
