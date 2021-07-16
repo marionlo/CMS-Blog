@@ -37,13 +37,13 @@
 
                             <?php 
                             
-                            // // DELETE COMMENT
-                            // if(isset($_GET['delete'])) {
-                            //     $the_comment_id = $_GET['delete'];
-                            //     $query = "DELETE FROM comments WHERE comment_id = {$comment_id} ";
-                            //     $delete_query = mysqli_query($connection, $query);
-                            //     header("Location: comments.php"); //This will refresh the page
-                            // }
+                            // DELETE USER
+                            if(isset($_GET['delete'])) {
+                                $the_user_id = $_GET['delete'];
+                                $query = "DELETE FROM users WHERE user_id = {$user_id} ";
+                                $delete_query = mysqli_query($connection, $query);
+                                header("Location: users.php"); //This will refresh the page
+                            }
 
                             // //APPROVE COMMENT
                             // if(isset($_GET['approve'])) {
