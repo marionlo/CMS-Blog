@@ -39,18 +39,35 @@
                                  echo "<td><a href='../post.php?p_id={$post_id}'>{$post_title}</a></td>";
                                           }
                                 echo "<td>{$comment_date}</td>";
-                                echo "<td><a href='posts.php?source=edit_post&p_id={}'>Approve</a></td>"; 
-                                echo "<td><a href='posts.php?unapprove={}'>Unapprove</a></td>";  
+                                echo "<td><a href='comments.php?approve={$comment_id}'>Approve</a></td>"; 
+                                echo "<td><a href='comments.php?unapprove={$comment_id}'>Unapprove</a></td>";  
                                 echo "<td><a href='comments.php?delete={$comment_id}'>Delete</a></td>";  
                                 echo "</tr>";
                             } ?>
 
                             <?php 
                             
+                            // DELETE COMMENT
                             if(isset($_GET['delete'])) {
                                 $the_comment_id = $_GET['delete'];
                                 $query = "DELETE FROM comments WHERE comment_id = {$comment_id} ";
                                 $delete_query = mysqli_query($connection, $query);
+                                header("Location: comments.php"); //This will refresh the page
+                            }
+
+                            //APPROVE COMMENT
+                            if(isset($_GET['approve'])) {
+                                $the_comment_id = $_GET['approve'];
+                                $query = "UPDATE comments SET comment_status = 'approve' WHERE comment_id = {$the_comment_id} ";
+                                $unapprove_query = mysqli_query($connection, $query);
+                                header("Location: comments.php"); //This will refresh the page
+                            }
+
+                            // UNAPPROVE COMMENT
+                            if(isset($_GET['unapprove'])) {
+                                $the_comment_id = $_GET['unapprove'];
+                                $query = "UPDATE comments SET comment_status = 'unapprove' WHERE comment_id = {$the_comment_id} ";
+                                $unapprove_query = mysqli_query($connection, $query);
                                 header("Location: comments.php"); //This will refresh the page
                             }
                             
