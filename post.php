@@ -71,8 +71,7 @@
                         if(!$create_comment_query) {
                             die("QUERY FAILED" . mysqli_error($connection));
                         }
-                    }
-                    
+
                     ?>
 
                 <!-- Comments Form -->

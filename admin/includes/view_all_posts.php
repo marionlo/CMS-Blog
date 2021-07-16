@@ -44,7 +44,15 @@
                                 echo "<td>{$post_status}</td>";
                                 echo "<td><img src='../images/$post_image'  width='100' alt='{$post_title}'/></td>";
                                 echo "<td>{$post_tags}</td>";
-                                echo "<td>{$post_comments}</td>";
+
+                                $query = "SELECT * FROM comments WHERE comment_post_id = $post_id ";
+                                $send_comment_query = mysqli_query($connection, $query);
+                                $count_comments = mysqli_num_rows($send_comment_query);
+
+                                echo "<td>{$count_comments}</td>";
+
+
+
                                 echo "<td>{$post_date}</td>";
                                 echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>"; 
                                 echo "<td><a href='posts.php?delete={$post_id}'>Delete</a></td>";   
