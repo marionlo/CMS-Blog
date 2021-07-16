@@ -55,6 +55,37 @@
 
                     <?php } ?>
 
+                                    <!-- Blog Comments -->
+                    <?php 
+                    
+                    if(isset($_POST['create_comment'])) {
+                        
+                    }
+                    
+                    ?>
+
+                <!-- Comments Form -->
+                <div class="well">
+                    <h4>Leave a Comment:</h4>
+                    <form action="" method="post" role="form">
+                        <div class="form-group">
+                            <label for="author">Author</label>
+                            <input type="text" name="comment_author" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="comment_email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                          <label for="comment">Your comment</label>
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type="submit" name="create_comment" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+
+                <hr>
+
                                     <!-- Posted Comments -->
 
                 <!-- Comment -->
