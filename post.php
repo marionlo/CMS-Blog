@@ -57,7 +57,7 @@
 
                                     <!-- Blog Comments -->
                     <?php 
-                    
+                    // Send the data of the comment form to the DB
                     if(isset($_POST['create_comment'])) {
                         $the_post_id = $_GET['p_id'];
                         $comment_author = $_POST['comment_author'];

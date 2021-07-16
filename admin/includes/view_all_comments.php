@@ -28,21 +28,16 @@
                                 echo "<td>{$comment_id}</td>";   
                                 echo "<td>{$comment_author}</td>";
                                 echo "<td>{$comment_content}</td>";
-
-                                // $query = "SELECT * FROM categories WHERE cat_id = $post_category_id ";
-                                //         $select_categories_id = mysqli_query($connection, $query);     
-                                //          while($row = mysqli_fetch_assoc($select_categories_id )) {
-                                //          $cat_title = $row['cat_title'];
-                                //          $cat_id = $row['cat_id'];
-
-                                // echo "<td>{$cat_title}</td>";
-                                //          }
-
-
-
                                 echo "<td>{$comment_email}</td>";
                                 echo "<td>{$comment_status}</td>";
-                                echo "<td>{$comment_post_id}</td>";
+
+                                $query = "SELECT * FROM posts WHERE post_id = $comment_post_id ";
+                                         $select_post_id = mysqli_query($connection, $query);     
+                                          while($row = mysqli_fetch_assoc($select_post_id)) {
+                                          $post_title = $row['post_title'];
+                                          $post_id = $row['post_id'];
+                                 echo "<td><a href='../post.php?p_id={$post_id}'>{$post_title}</a></td>";
+                                          }
                                 echo "<td>{$comment_date}</td>";
                                 echo "<td><a href='posts.php?source=edit_post&p_id={}'>Approve</a></td>"; 
                                 echo "<td><a href='posts.php?unapprove={}'>Unapprove</a></td>";  
