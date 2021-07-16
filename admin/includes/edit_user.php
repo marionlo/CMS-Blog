@@ -90,6 +90,27 @@ if(isset($_GET['p_id'])) {
         <label for="post_status">Post Status</label>
         <input type="text" class="form-control" name="post_status" value="<?php echo $post_status;?>"/>
       </div>
+
+      <div class="form-group">
+      <select name="user_role" id="user_role">
+            <?php 
+                // Display the categories titles on the select option
+                $query = "SELECT * FROM users ";
+                $select_users = mysqli_query($connection, $query);   
+                
+                confirm($select_users);
+
+                while($row = mysqli_fetch_assoc($select_users )) {
+                $user_id = $row['user_id'];
+                $user_role = $row['user_role'];
+
+                echo "<option value='{$user_id}'>{$user_role}</option>";
+
+                }
+            
+            ?>
+        </select>
+      </div>
      
       <div class="form-group">
         
