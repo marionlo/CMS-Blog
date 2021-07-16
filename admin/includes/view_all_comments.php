@@ -30,7 +30,7 @@
                                 echo "<td>{$comment_content}</td>";
                                 echo "<td>{$comment_email}</td>";
                                 echo "<td>{$comment_status}</td>";
-
+                                    // Add the post title for each comment
                                 $query = "SELECT * FROM posts WHERE post_id = $comment_post_id ";
                                          $select_post_id = mysqli_query($connection, $query);     
                                           while($row = mysqli_fetch_assoc($select_post_id)) {
@@ -41,17 +41,17 @@
                                 echo "<td>{$comment_date}</td>";
                                 echo "<td><a href='posts.php?source=edit_post&p_id={}'>Approve</a></td>"; 
                                 echo "<td><a href='posts.php?unapprove={}'>Unapprove</a></td>";  
-                                echo "<td><a href='posts.php?delete={}'>Delete</a></td>";  
+                                echo "<td><a href='comments.php?delete={$comment_id}'>Delete</a></td>";  
                                 echo "</tr>";
                             } ?>
 
                             <?php 
                             
                             if(isset($_GET['delete'])) {
-                                $the_post_id = $_GET['delete'];
-                                $query = "DELETE FROM posts WHERE post_id = {$the_post_id} ";
+                                $the_comment_id = $_GET['delete'];
+                                $query = "DELETE FROM comments WHERE comment_id = {$comment_id} ";
                                 $delete_query = mysqli_query($connection, $query);
-                                header("Location: posts.php"); //This will refresh the page
+                                header("Location: comments.php"); //This will refresh the page
                             }
                             
                             
