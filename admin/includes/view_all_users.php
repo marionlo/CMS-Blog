@@ -7,6 +7,9 @@
                                     <th>Last Name</th>
                                     <th>Email</th>
                                     <th>Role</th>
+                                    <th>Approve</th>
+                                    <th>Unapprove</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -26,6 +29,9 @@
                                 echo "<td>{$user_lastname}</td>";
                                 echo "<td>{$user_email}</td>";
                                 echo "<td>{$user_role}</td>";
+                                echo "<td><a href='users.php?approve={$user_id}'>Approve</a></td>"; 
+                                echo "<td><a href='users.php?unapprove={$user_id}'>Unapprove</a></td>";  
+                                echo "<td><a href='users.php?delete={$user_id}'>Delete</a></td>";  
                                 echo "</tr>";
                             } ?>
 
