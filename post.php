@@ -71,6 +71,7 @@
                         if(!$create_comment_query) {
                             die("QUERY FAILED" . mysqli_error($connection));
                         }
+                    }
 
                     ?>
 
@@ -108,7 +109,7 @@
                 if(!$select_comment_query) {
                     die('QUERY FAILED' . mysqli_error($connection));
                 }
-                while ($row = mysqli_fetch_assoc($select_comment_query)) {
+                while ($row = mysqli_fetch_array($select_comment_query)) {
                     $comment_date = $row['comment_date'];
                     $comment_author = $row['comment_author'];
                     $comment_content = $row['comment_content'];
@@ -139,11 +140,11 @@
 
 
             <!-- Blog Sidebar Widgets Column -->
-        <?php include "includes/sidebar.php" ?>
+            <?php include "includes/sidebar.php" ?>
 
         </div>
         <!-- /.row -->
 
         <hr>
    <!-- Footer -->
-     <?php include "includes/footer.php"; ?>
+   <?php include "includes/footer.php"; ?>
