@@ -1,4 +1,5 @@
 <?php include "db.php"; ?>
+<?php session_start(); ?>
 
 <?php 
 // Select user Query
@@ -30,6 +31,11 @@ if($username !== $db_username && $password !== $db_user_password) {
     header("Location: ../index.php");
 } else if($username == $db_username && $password == $db_user_password) {
     header("Location: ../admin");
+
+    $_SESSION['username'] = $db_username;
+    $_SESSION['firstname'] = $db_user_firstname;
+    $_SESSION['lastname'] = $db_user_lastname;
+    $_SESSION['user_role'] = $db_user_role;
 } else {
     header("Location: ../index.php");
 }
