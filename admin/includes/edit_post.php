@@ -17,6 +17,8 @@ if(isset($_GET['p_id'])) {
       $post_content = $row['post_content'];
       $post_comments = $row['post_comment_count'];
       $post_date = $row['post_date'];
+
+     
       }
       // Update the DB with the content of the edit page
       if(isset($_POST['edit_post'])) {
@@ -50,6 +52,8 @@ if(isset($_GET['p_id'])) {
     $update_post_query = mysqli_query($connection, $query);
 
     confirm($update_post_query);
+
+    echo "<p class='bg-success'>Your post has been updated. <a href='../post.php?p_id={$the_post_id}'>View Post</a> or <a href='posts.php'>Edit other Posts.</a> </p>";
 
       }
 ?>
@@ -111,7 +115,7 @@ if(isset($_GET['p_id'])) {
      
       <div class="form-group">
         <label for="post_content">Post Content</label>
-          <textarea class="form-control" name="post_content" id="" rows="10" cols="30"><?php echo $post_content;?></textarea>
+          <textarea class="form-control" name="post_content" id="summernote" rows="10" cols="30"><?php echo $post_content;?></textarea>
         </div>
      
         <div class="form-group">
