@@ -7,9 +7,9 @@
                                     <th>Last Name</th>
                                     <th>Email</th>
                                     <th>Role</th>
-                                    <th>Approve</th>
-                                    <th>Unapprove</th>
-                                    <th>Delete</th>
+                                    <th>Delete User</th>
+                                    <th>Promote to Admin</th>
+                                    <th>Promote to Subscriber</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -29,9 +29,9 @@
                                 echo "<td>{$user_lastname}</td>";
                                 echo "<td>{$user_email}</td>";
                                 echo "<td>{$user_role}</td>";
-                                echo "<td><a href='users.php?approve={$user_id}'>Approve</a></td>"; 
-                                echo "<td><a href='users.php?unapprove={$user_id}'>Unapprove</a></td>";  
-                                echo "<td><a href='users.php?delete={$user_id}'>Delete</a></td>";  
+                                echo "<td><a href='users.php?delete={$user_id}'>Delete</a></td>"; 
+                                echo "<td><a href='users.php?change_to_admin={$user_id}'>Promote to Admin</a></td>";  
+                                echo "<td><a href='users.php?change_to_sub={$user_id}'>Promote to Subscriber</a></td>";  
                                 echo "</tr>";
                             } ?>
 
@@ -45,21 +45,21 @@
                                 header("Location: users.php"); //This will refresh the page
                             }
 
-                            // //APPROVE COMMENT
-                            // if(isset($_GET['approve'])) {
-                            //     $the_comment_id = $_GET['approve'];
-                            //     $query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = {$the_comment_id} ";
-                            //     $unapprove_query = mysqli_query($connection, $query);
-                            //     header("Location: comments.php"); //This will refresh the page
-                            // }
+                            //PROMOTE USER TO ADMIN
+                            if(isset($_GET['change_to_admin'])) {
+                                $the_user_id = $_GET['change_to_admin'];
+                                $query = "UPDATE users SET user_role = 'admin' WHERE user_id = {$the_user_id} ";
+                                $change_to_admin_query = mysqli_query($connection, $query);
+                                header("Location: users.php"); //This will refresh the page
+                            }
 
-                            // // UNAPPROVE COMMENT
-                            // if(isset($_GET['unapprove'])) {
-                            //     $the_comment_id = $_GET['unapprove'];
-                            //     $query = "UPDATE comments SET comment_status = 'unapproved' WHERE comment_id = {$the_comment_id} ";
-                            //     $unapprove_query = mysqli_query($connection, $query);
-                            //     header("Location: comments.php"); //This will refresh the page
-                            // }
+                            // PROMOTE USER TO SUBSCRIBER
+                            if(isset($_GET['change_to_sub'])) {
+                                $the_user_id = $_GET['change_to_sub'];
+                                $query = "UPDATE users SET user_role = 'subscriber' WHERE user_id = {$the_user_id} ";
+                                $change_to_subscriber_query = mysqli_query($connection, $query);
+                                header("Location: users.php"); //This will refresh the page
+                            }
                             
                             
                             ?>
