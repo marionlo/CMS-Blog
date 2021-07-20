@@ -37,14 +37,14 @@
                     </li>
 
                     <?php 
-                    if(isset($_SESSION['user_role'])) {
-                        if($_GET['p_id']) {
-                            $post_id = $_GET['p_id'];
-                            echo "<li>
-                            <a href='admin/post.php?source=edit_post?p_id={$post_id}'>Edit Post</a>
-                        </li>";
-                        }
-                    }
+                   if (session_status() == PHP_SESSION_NONE) session_start();
+                   if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
+                       // check the post page
+                       if (isset($_GET['p_id'])) {
+                           $the_post_id = $_GET['p_id'];
+                           echo "<li><a href='admin/posts.php?source=edit_post&p_id={$the_post_id}'>Edit Post</a></li>";
+                       }
+                   }
                     
                     
                     ?>
