@@ -28,14 +28,26 @@ if(isset($_POST['edit_user'])) {
     $user_email = $_POST['user_email'];
     $user_password = $_POST['user_password'];
 
+    //Crypt the password when you edit it
+    $query = "SELECT randSalt FROM users";
+    $select_randsalt_query = mysqli_query($connection, $query);
+
+    if(!$select_randsalt_query) {
+      die("Query Failed" . mysqli_error($connection));
+    }
+
+    $row = mysqli_fetch_array($select_randsalt_query); 
+    $salt = $row['randSalt'];
+    $hashed_password = crypt($user_password, $salt);
+
     //Pass the variables from the form into the query
     $query = "UPDATE users SET user_firstname='{$user_firstname}', user_lastname='{$user_lastname}', user_role='{$user_role}', ";
-    $query .="username='{$username}', user_email='{$user_email}', password='{$user_password}' WHERE user_id = {$the_user_id} ";
+    $query .="username='{$username}', user_email='{$user_email}', password='{$hashed_password}' WHERE user_id = {$the_user_id} ";
     //Send the query to the DB
     $update_user_query = mysqli_query($connection, $query);
 
     confirm($update_user_query);
-
+    echo "<p class='bg-success'>User updated. <a href='users.php'>View Users?</a> </p>";
       }
 
 
@@ -55,7 +67,7 @@ if(isset($_POST['edit_user'])) {
      
       <div class="form-group">
       <select name="user_role" id="user_role">
-      <option value="subscriber"><?php echo $user_role;?></option>
+      <option value="<?php echo $user_role;?>"><?php echo $user_role;?></option>
         <?php 
         if ($user_role == 'admin') {
           echo '<option value="subscriber">subscriber</option>';
