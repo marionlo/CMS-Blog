@@ -24,6 +24,11 @@ if(isset($_POST['create_post'])) {
     $create_post_query = mysqli_query($connection, $query);
 
     confirm($create_post_query);
+
+    //Pull the latest created id in this table
+    $the_post_id = mysqli_insert_id($connection);
+
+    echo "<p class='bg-success'>Your post has been created. <a href='../post.php?p_id={$the_post_id}'>View Post</a> or <a href='posts.php'>Edit other Posts.</a> </p>";
 }
 
 
