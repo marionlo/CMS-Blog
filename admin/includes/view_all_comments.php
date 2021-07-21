@@ -1,3 +1,10 @@
+<?php // Prevent the subscribers to access the view all comments page
+if (!is_admin( $_SESSION ['username'])){     
+    header ("location: index.php"); 
+}
+
+?>
+
 <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>

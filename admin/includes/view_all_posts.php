@@ -1,5 +1,10 @@
 <?php 
 
+// Prevent the subscribers to access the view all posts page
+if (!is_admin( $_SESSION ['username'])){     
+    header ("location: index.php"); 
+}
+
 if(isset($_POST['checkBoxArray'])) {
     foreach($_POST['checkBoxArray'] as $postValueId){
         
