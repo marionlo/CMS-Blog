@@ -54,7 +54,7 @@ function deleteCategories() {
     }
 }
 
-function is_admin($username = '') {
+function is_admin($username) {
     global $connection;
 
     $query ="SELECT user_role FROM users WHERE username ='$username' ";
@@ -68,6 +68,21 @@ function is_admin($username = '') {
     } else {
         return false;
     }
+
+}
+
+function username_exists($username){
+    global $connection;
+    $query ="SELECT username FROM users WHERE username ='$username' ";
+    $result = mysqli_query($connection, $query);
+    confirm($result);
+
+    if(mysqli_num_rows($result) > 0) {
+        return true;
+    } else {
+        return false;
+    }
+
 
 }
 

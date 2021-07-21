@@ -1,5 +1,6 @@
 <?php  include "includes/db.php"; ?>
- <?php  include "includes/header.php"; ?>
+<?php  include "includes/header.php"; ?>
+
 
  <?php 
  
@@ -7,6 +8,13 @@
    $username = $_POST['username'];
    $email = $_POST['email'];
    $password = $_POST['password'];
+
+   // Verify if the username exists
+   if(username_exists($username)) {
+    $message = "User already exists.";
+   }
+
+
     // Escape the values
    $username = mysqli_real_escape_string($connection, $username);
    $email = mysqli_real_escape_string($connection, $email);
@@ -33,10 +41,10 @@
             die("Query Failed". mysqli_error($connection));
         } 
 
-        $message = "Your registration has been submitted.";
+        //$message = "Your registration has been submitted.";
         
     } else {
-        $message = "Fields cannot be empty";
+        //$message = "Fields cannot be empty";
     }
     
  } else {
