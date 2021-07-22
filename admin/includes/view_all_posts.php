@@ -52,9 +52,8 @@ if(isset($_POST['checkBoxArray'])) {
                 confirm($clone_posts);
                 break;
 
+        }
     }
-}
-
 }
 
 ?>
@@ -92,7 +91,9 @@ if(isset($_POST['checkBoxArray'])) {
                                 </tr>
                             </thead>
                             <tbody>
-                            <?php $query = "SELECT * FROM posts";
+                            <?php 
+                                // Display the posts on the table - latest created first
+                                $query = "SELECT * FROM posts ORDER BY post_id DESC";
                                 $select_posts = mysqli_query($connection, $query);     
                                 while($row = mysqli_fetch_assoc($select_posts )) {
                                 $post_id = $row['post_id'];

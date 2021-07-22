@@ -1,9 +1,11 @@
+// Add the text editor
 $(document).ready(function() {
     $('#summernote').summernote({
         height: 250
     });
   });
 
+// Select all checkboxes at once
   $(document).ready(function(){ 
     $('#selectAllBoxes').click(function(event){
         if(this.checked) {
@@ -19,6 +21,9 @@ $(document).ready(function() {
 
   });
 
-  
-
+  var div_box = "<div id='load-screen'><div id='loading'</div></div>";
+  $("body").prepend(div_box);
+  $('#load-screen').delay(300).fadeOut(600, function(){
+    $(this).remove();
+  });
   
