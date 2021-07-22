@@ -4,53 +4,55 @@
 
  <?php 
  
- if(isset($_POST['submit'])) {
-   $username = $_POST['username'];
-   $email = $_POST['email'];
-   $password = $_POST['password'];
+ if($_SERVER['REQUEST_METHOD'] == "POST") {
+    $username = trim($_POST['username']);
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
 
-   // Verify if the username exists
-   if(username_exists($username)) {
-    $message = "User already exists.";
-   }
+    $error = [
+        'username' => '',
+        'email' => '',
+        'password' => ''
+    ];
 
+    if(strlen($username) < 4) {
+        $error['username'] = '<div class="form-control alert-danger">Username needs to be longer.</div>';
+    }
 
-    // Escape the values
-   $username = mysqli_real_escape_string($connection, $username);
-   $email = mysqli_real_escape_string($connection, $email);
-   $password = mysqli_real_escape_string($connection, $password);
+    if($username=='') {
+        $error['username'] = '<div class="form-control alert-danger">Username cannot be empty.</div>';
+    }
 
-   $query = "SELECT randSalt FROM users";
-   $select_randSalt_query = mysqli_query($connection, $query);
+    if(username_exists($username)) {
+        $error['username'] = '<div class="form-control alert-danger">Username already exists.</div>';
+    }
 
-   if(!$select_randSalt_query) {
-       die("Query Failed". mysqli_error($connection));
-   }
-   // Fetch our DB
-    $row = mysqli_fetch_array($select_randSalt_query); 
-    $salt = $row['randSalt'];
+    if($email=='') {
+        $error['email'] = '<div class="form-control alert-danger">The email cannot be empty.</div>';
+    }
 
-    $password = crypt($password, $salt);
+    if(email_exists($email)) {
+        $error['email'] = '<div class="form-control alert-danger">The email already exists, <a href="index.php">please login</a></div>';
+    }
 
-    if(!empty($username) && !empty($email) && !empty($password)) {
+    if($password=='') {
+        $error['password'] = '<div class="form-control alert-danger">The password cannot be empty.</div>';
+    }
 
-        $query = "INSERT INTO users (username, user_email, password, user_role) ";
-        $query .= "VALUES ('$username', '$email', '$password', 'subscriber')";
-        $register_user_query = mysqli_query($connection, $query);
-        if(!$register_user_query) {
-            die("Query Failed". mysqli_error($connection));
-        } 
+     // Loop through the array of errors and make sure that they are empty
+    foreach($error as $key => $value) {
+    if(empty($value)) {
+        unset($error[$key]);
+    }
+}
 
-        //$message = "Your registration has been submitted.";
-        
-    } else {
-        //$message = "Fields cannot be empty";
+ // When there is no error, register the user
+    if(empty($error)) {
+        register_user($username, $email, $password);
+        login_user($username, $password);
     }
     
- } else {
-    $message = "";
- }
-
+ } 
 
 
 
@@ -73,22 +75,26 @@
             <div class="col-xs-6 col-xs-offset-3">
                 <div class="form-wrap">
                 <h1>Register</h1>
-                    <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
-                        <h4 class="text-center text-danger"><?php echo $message;?></h4>
+                    <form role="form" action="registration.php" method="post" id="login-form" autocomplete="on">
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
-                            <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username">
+                            <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username" autocomplete="on"
+                            value="<?php echo isset($username) ? $username : '' ?>"> 
+                            <div><?php echo isset($error['username']) ? $error['username'] : '' ?></div>
                         </div>
                          <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com">
+                            <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com" autocomplete="on"
+                            value="<?php echo isset($email) ? $email : '' ?>">
+                            <div><?php echo isset($error['email']) ? $error['email'] : '' ?></div>
                         </div>
                          <div class="form-group">
                             <label for="password" class="sr-only">Password</label>
                             <input type="password" name="password" id="key" class="form-control" placeholder="Password">
+                            <div><?php echo isset($error['password']) ? $error['password'] : '' ?></div>
                         </div>
                 
-                        <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
+                        <input type="submit" name="register" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
                     </form>
                  
                 </div>

@@ -6,6 +6,11 @@ function confirm($result) {
     }
 }
 
+function redirect($location) {
+    return header("Location:" . $location);
+}
+
+
 // Add a category feature 
 function insert_categories() {
     global $connection;
@@ -82,9 +87,90 @@ function username_exists($username){
     } else {
         return false;
     }
-
-
 }
+
+function email_exists($email){
+    global $connection;
+    $query ="SELECT user_email FROM users WHERE user_email ='$email' ";
+    $result = mysqli_query($connection, $query);
+    confirm($result);
+
+    if(mysqli_num_rows($result) > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function register_user($username, $email, $password) {
+    global $connection;
+
+    // Escape the values
+    $username = mysqli_real_escape_string($connection, $username);
+    $email = mysqli_real_escape_string($connection, $email);
+    $password = mysqli_real_escape_string($connection, $password);
+
+    $query = "SELECT randSalt FROM users";
+    $select_randSalt_query = mysqli_query($connection, $query);
+
+    confirm($select_randSalt_query);
+    
+    // Fetch our DB
+    $row = mysqli_fetch_array($select_randSalt_query); 
+    $salt = $row['randSalt'];
+
+    $password = crypt($password, $salt);
+
+    $query = "INSERT INTO users (username, user_email, password, user_role) ";
+    $query .= "VALUES ('$username', '$email', '$password', 'subscriber')";
+    $register_user_query = mysqli_query($connection, $query);
+
+    confirm($register_user_query);
+
+     
+}
+
+function login_user($username, $password) {
+    global $connection;
+
+    $username = trim($username);
+    $password = trim($password);
+
+    $username = mysqli_real_escape_string($connection, $username);
+    $password = mysqli_real_escape_string($connection, $password);
+
+    $query = "SELECT * FROM users WHERE username = '$username' ";
+    $select_user_query = mysqli_query($connection, $query);
+
+    if(!$select_user_query) {
+        die('Query Failed' . mysqli_error($connection));
+    }
+
+    while($row = mysqli_fetch_array($select_user_query)) {
+        $db_user_id = $row['user_id'];
+        $db_username = $row['username'];
+        $db_user_firstname = $row['user_firstname'];
+        $db_user_lastname = $row['user_lastname'];
+        $db_user_role = $row['user_role'];
+        $db_user_password = $row['password'];
+        
+    }
+    // Update the password so that it works when it's crypted
+    $password = crypt($password, $db_user_password);
+
+    if($username === $db_username && $password === $db_user_password) {
+        $_SESSION['username'] = $db_username;
+        $_SESSION['firstname'] = $db_user_firstname;
+        $_SESSION['lastname'] = $db_user_lastname;
+        $_SESSION['user_role'] = $db_user_role;
+
+        redirect("/cms/admin");
+
+    } else {
+        redirect("/cms/index.php");
+    }
+}
+
 
 
 
