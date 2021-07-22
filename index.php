@@ -12,12 +12,23 @@
 
             <!-- Blog Entries Column -->
             <div class="col-md-8">
+            <h1 class="page-header">
+                    Welcome to
+                    <small>Dkz's blog</small>
+                </h1>
 
             <?php 
-            
-            $query = "SELECT * FROM posts WHERE post_status = 'published'";
-            $select_all_posts_query = mysqli_query($connection, $query);
 
+            // Find how many published posts we have
+            $post_query_count = "SELECT * FROM posts WHERE post_status = 'published' ";
+            $find_count = mysqli_query($connection, $query);
+            $count = mysqli_num_rows($find_count);
+
+
+            // Make a query to the DB to find all the posts with the published status
+            $query = "SELECT * FROM posts WHERE post_status = 'published' LIMIT 5";
+            $select_all_posts_query = mysqli_query($connection, $query);
+             // Fetch all the Data we need from the query
                     while($row = mysqli_fetch_assoc($select_all_posts_query)) {
                         $post_id = $row['post_id'];
                         $post_title = $row['post_title'];
@@ -29,10 +40,7 @@
 
                         ?>
 
-                <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
-                </h1>
+                
 
                 <!-- First Blog Post -->
                 <h2>
