@@ -15,10 +15,13 @@
 
                         // Catch the id of the post
             if(isset($_GET['p_id'])) {
-                $the_post_id = $_GET['p_id'];
-            }
-
+            $the_post_id = $_GET['p_id'];
             
+            // Update the post views count everytime a visitor visits the page
+            $view_query = "UPDATE posts SET post_views_count = post_views_count+1 WHERE post_id =  $the_post_id ";
+            $send_query = mysqli_query($connection, $view_query);
+            
+             // Make the query to the DB to fetch the required post
             $query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
             $select_all_posts_query = mysqli_query($connection, $query);
 
@@ -53,7 +56,14 @@
                 <hr>
 
 
-                    <?php } ?>
+                    <?php } } else {
+                        // Redirect the user if he's going to this page without post id
+                        header("Location: index.php");
+                    }
+                    
+                    
+                    
+                    ?>
 
                                     <!-- Blog Comments -->
                     <?php 
