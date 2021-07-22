@@ -15,18 +15,37 @@
             <h1 class="page-header">
                     Welcome to
                     <small>Dkz's blog</small>
-                </h1>
+            </h1>
+            
 
             <?php 
+            // Check if the page is set
+            if(isset($_GET['page'])) {
+            // Take the value from the page
+                $page = $_GET['page'];
+            // If the page is not set we are setting it to an empty string
+            } else {
+                $page = "";
+            }
+
+            // Check if the page is set to an emptry string or number one, it means that we are on the homepage
+            if($page == "" || $page == 1) {
+                $page_1 = 0;
+            //  If the page is not the homepage, we calculate the variable page_1 to limit the number of posts displayed
+            } else {
+                $page_1 = ($page * 5) - 5;
+            }
 
             // Find how many published posts we have
             $post_query_count = "SELECT * FROM posts WHERE post_status = 'published' ";
-            $find_count = mysqli_query($connection, $query);
+            $find_count = mysqli_query($connection, $post_query_count);
             $count = mysqli_num_rows($find_count);
+
+            $count = ceil($count / 5);
 
 
             // Make a query to the DB to find all the posts with the published status
-            $query = "SELECT * FROM posts WHERE post_status = 'published' LIMIT 5";
+            $query = "SELECT * FROM posts WHERE post_status = 'published' ORDER BY post_date DESC LIMIT $page_1, 5 ";
             $select_all_posts_query = mysqli_query($connection, $query);
              // Fetch all the Data we need from the query
                     while($row = mysqli_fetch_assoc($select_all_posts_query)) {
@@ -43,6 +62,7 @@
                 
 
                 <!-- First Blog Post -->
+                
                 <h2>
                     <a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title ?></a>
                 </h2>
@@ -76,5 +96,23 @@
         <!-- /.row -->
 
         <hr>
+
+           <!-- Pagination -->
+           <ul class="pager">
+            <?php 
+            
+            for($i=1; $i <= $count; $i++){
+                // Create the pagination and add a class of active if the page is selected
+                if($i == $page) {
+                    echo "<li><a href='index.php?page={$i}' class='active-link'>{$i}</a></li>";}
+                 else {
+                    echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";}
+                }
+              
+
+            
+            
+            ?>
+           </ul>
    <!-- Footer -->
      <?php include "includes/footer.php"; ?>
