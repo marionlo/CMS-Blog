@@ -4,16 +4,12 @@ if(isset($_POST['create_user'])) {
     $user_firstname = $_POST['user_firstname'];
     $user_lastname = $_POST['user_lastname'];
     $user_role = $_POST['user_role']; 
-
-    // $post_image = $_FILES['image']['name'];
-    // $post_image_temp = $_FILES['image']['tmp_name'];
     $username = $_POST['username'];
     $user_email = $_POST['user_email'];
     $user_password = $_POST['user_password'];
-    // $post_date = date('d-m-y');
 
-    // move_uploaded_file($post_image_temp, "../images/$post_image"); //Move the temporary file to the images folder
-
+    // Crypt the password
+    $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 10) );
 
     //Pass the variables from the form into the query
     $query = "INSERT INTO users(user_firstname, user_lastname, user_role, username, user_email, password ) ";
@@ -47,15 +43,7 @@ if(isset($_POST['create_user'])) {
             <option value="admin">Admin</option>
             <option value="subscriber">Subscriber</option>
         </select>
-      </div>
-     
-      
-     
-      <!-- <div class="form-group">
-        <label for="post_image">Post Image</label>
-        <input type="file" name="image" />
-      </div> -->
-     
+      </div>  
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" class="form-control" name="username" />

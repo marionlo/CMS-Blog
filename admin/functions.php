@@ -110,16 +110,10 @@ function register_user($username, $email, $password) {
     $email = mysqli_real_escape_string($connection, $email);
     $password = mysqli_real_escape_string($connection, $password);
 
-    $query = "SELECT randSalt FROM users";
-    $select_randSalt_query = mysqli_query($connection, $query);
+    $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12) );
 
-    confirm($select_randSalt_query);
     
     // Fetch our DB
-    $row = mysqli_fetch_array($select_randSalt_query); 
-    $salt = $row['randSalt'];
-
-    $password = crypt($password, $salt);
 
     $query = "INSERT INTO users (username, user_email, password, user_role) ";
     $query .= "VALUES ('$username', '$email', '$password', 'subscriber')";
@@ -155,10 +149,8 @@ function login_user($username, $password) {
         $db_user_password = $row['password'];
         
     }
-    // Update the password so that it works when it's crypted
-    $password = crypt($password, $db_user_password);
-
-    if($username === $db_username && $password === $db_user_password) {
+  
+    if(password_verify($password, $db_user_password)) {
         $_SESSION['username'] = $db_username;
         $_SESSION['firstname'] = $db_user_firstname;
         $_SESSION['lastname'] = $db_user_lastname;

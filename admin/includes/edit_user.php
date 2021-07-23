@@ -2,7 +2,7 @@
 
 if(isset($_GET['edit_user'])) {
   $the_user_id = $_GET['edit_user'];
-}
+
 
 
  // Query the data from the DB and display it to the edit user form
@@ -27,19 +27,22 @@ if(isset($_POST['edit_user'])) {
     $username = $_POST['username'];
     $user_email = $_POST['user_email'];
     $user_password = $_POST['user_password'];
+    
+    // Crypt the password
+    if(!empty($user_password)) { 
 
-    //Crypt the password when you edit it
-    $query = "SELECT randSalt FROM users";
-    $select_randsalt_query = mysqli_query($connection, $query);
+        $query_password = "SELECT password FROM users WHERE user_id =  $the_user_id";
+        $get_user_query = mysqli_query($connection, $query_password);
+        confirm($get_user_query);
 
-    if(!$select_randsalt_query) {
-      die("Query Failed" . mysqli_error($connection));
-    }
+        $row = mysqli_fetch_array($get_user_query);
 
-    $row = mysqli_fetch_array($select_randsalt_query); 
-    $salt = $row['randSalt'];
-    $hashed_password = crypt($user_password, $salt);
+        $db_user_password = $row['password'];
 
+    //Send the query to the DB when the user wants to change his password
+      if($db_user_password != $user_password) {
+
+    $hashed_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12));
     //Pass the variables from the form into the query
     $query = "UPDATE users SET user_firstname='{$user_firstname}', user_lastname='{$user_lastname}', user_role='{$user_role}', ";
     $query .="username='{$username}', user_email='{$user_email}', password='{$hashed_password}' WHERE user_id = {$the_user_id} ";
@@ -48,9 +51,24 @@ if(isset($_POST['edit_user'])) {
 
     confirm($update_user_query);
     echo "<p class='bg-success'>User updated. <a href='users.php'>View Users?</a> </p>";
-      }
 
 
+    //Send the query to the DB when the user doesnt want to change his password
+      } else if($db_user_password = $user_password) {
+    $query = "UPDATE users SET user_firstname='{$user_firstname}', user_lastname='{$user_lastname}', user_role='{$user_role}', ";
+    $query .="username='{$username}', user_email='{$user_email}' WHERE user_id = {$the_user_id} ";
+    //Send the query to the DB
+    $update_user_query = mysqli_query($connection, $query);
+
+    confirm($update_user_query);
+    echo "<p class='bg-success'>User updated. <a href='users.php'>View Users?</a> </p>";
+
+        }  
+      } 
+    }
+  } else {
+    header("Location: index .php");
+  }
 ?>
 
 
