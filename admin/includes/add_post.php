@@ -1,5 +1,5 @@
 <?php 
-
+$post_author = $_SESSION['username'];
 if(isset($_POST['create_post'])) {
     $post_author = $_POST['post_author'];
     $post_title = $_POST['post_title'];
@@ -42,6 +42,7 @@ if(isset($_POST['create_post'])) {
       </div>
      
       <div class="form-group">
+        <label for="cateogry">Category</label>
       <select name="post_category" id="post_category">
             <?php 
                 // Display the categories titles on the select option
@@ -63,7 +64,7 @@ if(isset($_POST['create_post'])) {
      
       <div class="form-group">
         <label for="post_author">Post Author</label>
-        <input type="text" class="form-control" name="post_author" />
+        <input type="text" class="form-control" name="post_author" readonly="readonly" value="<?php echo $post_author ?>"/>
       </div>
      
       <div class="form-group">  
