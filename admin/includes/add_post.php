@@ -1,14 +1,14 @@
 <?php 
 $post_author = $_SESSION['username'];
 if(isset($_POST['create_post'])) {
+
+  
     $post_author = escape($_POST['post_author']);
-    $post_title = escape($_POST['post_title']);
+    $post_title =escape($_POST['post_title']);
     $post_category_id = escape($_POST['post_category']);
     $post_status = escape($_POST['post_status']); 
-
     $post_image = $_FILES['image']['name'];
     $post_image_temp = $_FILES['image']['tmp_name'];
-
     $post_tags = escape($_POST['post_tags']);
     $post_content = escape($_POST['post_content']);
     // $post_comments = 4;
@@ -29,6 +29,7 @@ if(isset($_POST['create_post'])) {
     $the_post_id = mysqli_insert_id($connection);
 
     echo "<p class='bg-success'>Your post has been created. <a href='../post.php?p_id={$the_post_id}'>View Post</a> or <a href='posts.php'>Edit other Posts.</a> </p>";
+
 }
 
 

@@ -15,7 +15,6 @@ function escape($string) {
     return mysqli_real_escape_string($connection, trim($string));
 }
 
-
 // Add a category feature 
 function insert_categories() {
     global $connection;

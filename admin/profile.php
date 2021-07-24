@@ -86,22 +86,22 @@ if(isset($_POST['edit_user'])) {
                             <form action="" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="user_firtname">First name</label>
-                                <input type="text" class="form-control" name="user_firstname" value="<?php echo $user_firstname;?>" />
+                                <input type="text" class="form-control" name="user_firstname" value="<?php echo htmlspecialchars(stripslashes($user_firstname));?>" />
                             </div>
                             
                             <div class="form-group">
                                 <label for="user_lastname">Last name</label>
-                                <input type="text" class="form-control" name="user_lastname" value="<?php echo $user_lastname;?>"/>
+                                <input type="text" class="form-control" name="user_lastname" value="<?php echo htmlspecialchars(stripslashes($user_lastname));?>"/>
                             </div>
                             
                             <div class="form-group">
                                 <label for="username">Username</label>
-                                <input type="text" class="form-control" name="username" value="<?php echo $username;?>" />
+                                <input type="text" class="form-control" name="username" value="<?php echo htmlspecialchars(stripslashes($username));?>" />
                             </div>
                             
                             <div class="form-group">
                                 <label for="user_email">Email</label>
-                                <input type="email" class="form-control" name="user_email" value="<?php echo $user_email;?>"/>
+                                <input type="email" class="form-control" name="user_email" value="<?php echo htmlspecialchars(stripslashes($user_email));?>"/>
                                 </div>
 
                                 <div class="form-group">

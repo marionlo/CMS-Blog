@@ -6,20 +6,21 @@ if(isset($_GET['p_id'])) {
         // Query the keys from the database and pass it to the form
       $query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
       $select_posts = mysqli_query($connection, $query);     
-      while($row = mysqli_fetch_assoc($select_posts )) {
+      while($row = mysqli_fetch_assoc($select_posts)) {
       $post_id = $row['post_id'];
-      $post_author = $row['post_author'];
-      $post_title = $row['post_title'];
+      $post_author = stripcslashes($row['post_author']);
+      $post_title = stripcslashes($row['post_title']);
       $post_category_id = $row['post_category_id'];
       $post_status = $row['post_status'];
       $post_image = $row['post_image'];
-      $post_tags = $row['post_tags'];
-      $post_content = $row['post_content'];
+      $post_tags = stripcslashes($row['post_tags']);
+      $post_content = stripcslashes($row['post_content']); 
       $post_comments = $row['post_comment_count'];
       $post_date = $row['post_date'];
-
      
       }
+
+
       // Update the DB with the content of the edit page
       if(isset($_POST['edit_post'])) {
         $post_author = escape($_POST['post_author']);
@@ -61,7 +62,7 @@ if(isset($_GET['p_id'])) {
 <form action="" method="post" enctype="multipart/form-data">
       <div class="form-group">
         <label for="title">Post Title</label>
-        <input type="text" class="form-control" name="post_title" value="<?php echo $post_title;?>" />
+        <input type="text" class="form-control" name="post_title" value="<?php echo stripcslashes($post_title);?>" />
       </div>
      
       <div class="form-group">
@@ -87,7 +88,7 @@ if(isset($_GET['p_id'])) {
      
       <div class="form-group">
         <label for="post_author">Post Author</label>
-        <input type="text" class="form-control" name="post_author" value="<?php echo $post_author;?>"/>
+        <input type="text" class="form-control" name="post_author" value="<?php echo stripcslashes($post_author);?>"/>
       </div>
      
       <div class="form-group">
@@ -110,12 +111,12 @@ if(isset($_GET['p_id'])) {
      
       <div class="form-group">
         <label for="post_tags">Post Tags</label>
-        <input type="text" class="form-control" name="post_tags" value="<?php echo $post_tags;?>"/>
+        <input type="text" class="form-control" name="post_tags" value="<?php echo stripcslashes($post_tags);?>"/>
       </div>
      
       <div class="form-group">
         <label for="post_content">Post Content</label>
-          <textarea class="form-control" name="post_content" id="summernote" rows="10" cols="30"><?php echo $post_content;?></textarea>
+          <textarea class="form-control" name="post_content" id="summernote" rows="10" cols="30"><?php echo stripcslashes($post_content);?></textarea>
         </div>
      
         <div class="form-group">
