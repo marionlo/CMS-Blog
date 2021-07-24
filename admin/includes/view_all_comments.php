@@ -59,7 +59,7 @@ if (!is_admin( $_SESSION ['username'])){
                                  // Prevent people from deleting when they are not logged in
                                     if(isset($_SESSION['user_role'])) {
                                     if($_SESSION['user_role'] == 'admin') {
-                                $the_comment_id = $_GET['delete'];
+                                $the_comment_id = mysqli_real_escape_string($connection, $_GET['delete']);
                                 $query = "DELETE FROM comments WHERE comment_id = {$the_comment_id} ";
                                 $delete_query = mysqli_query($connection, $query);
                                 header("Location: comments.php"); //This will refresh the page
@@ -72,7 +72,7 @@ if (!is_admin( $_SESSION ['username'])){
                                  // Prevent people from approving when they are not logged in
                                     if(isset($_SESSION['user_role'])) {
                                     if($_SESSION['user_role'] == 'admin') {
-                                $the_comment_id = $_GET['approve'];
+                                $the_comment_id = mysqli_real_escape_string($connection, $_GET['approve']);
                                 $query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = {$the_comment_id} ";
                                 $unapprove_query = mysqli_query($connection, $query);
                                 header("Location: comments.php"); //This will refresh the page
@@ -85,7 +85,7 @@ if (!is_admin( $_SESSION ['username'])){
                                  // Prevent people from unapproving when they are not logged in
                                     if(isset($_SESSION['user_role'])) {
                                     if($_SESSION['user_role'] == 'admin') {
-                                $the_comment_id = $_GET['unapprove'];
+                                $the_comment_id = mysqli_real_escape_string($connection, $_GET['unapprove']);
                                 $query = "UPDATE comments SET comment_status = 'unapproved' WHERE comment_id = {$the_comment_id} ";
                                 $unapprove_query = mysqli_query($connection, $query);
                                 header("Location: comments.php"); //This will refresh the page

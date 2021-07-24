@@ -19,11 +19,11 @@ if(isset($_SESSION['username'])) {
 
    // Update the data on the DB with the data from the form
 if(isset($_POST['edit_user'])) {
-    $user_firstname = $_POST['user_firstname'];
-    $user_lastname = $_POST['user_lastname'];
-    $username = $_POST['username'];
-    $user_email = $_POST['user_email'];
-    $user_password = $_POST['user_password'];
+    $user_firstname =  escape($_POST['user_firstname']);
+    $user_lastname =  escape($_POST['user_lastname']);
+    $username =  escape($_POST['username']);
+    $user_email =  escape($_POST['user_email']);
+    $user_password =  escape($_POST['user_password']);
     
     // Crypt the password
     if(!empty($user_password)) { 
