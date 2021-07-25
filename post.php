@@ -24,10 +24,22 @@
             // Update the post views count everytime a visitor visits the page
             $view_query = "UPDATE posts SET post_views_count = post_views_count+1 WHERE post_id =  $the_post_id ";
             $send_query = mysqli_query($connection, $view_query);
-            
-             // Make the query to the DB to fetch the required post
+
+            if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
+                 // Make the query to the DB to fetch the required post
             $query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
+
+            } else {
+                 // For not admin people just show the published posts
+            $query = "SELECT * FROM posts WHERE post_id = $the_post_id AND post_status = 'published' ";
+            }
+            
             $select_all_posts_query = mysqli_query($connection, $query);
+
+            if (mysqli_num_rows($select_all_posts_query)==0) {
+                echo "<h1 class='text-center'>No Posts available</h1>";
+                // Displays a message if there is no post published yet
+            } else {
 
                     while($row = mysqli_fetch_assoc($select_all_posts_query)) {
                         $post_title = $row['post_title'];
@@ -56,11 +68,7 @@
                 <hr>
 
 
-                    <?php } } else {
-                        // Redirect the user if he's going to this page without post id
-                        header("Location: index.php");
-                    }
-                    
+                    <?php }  
                     
                     
                     ?>
@@ -149,7 +157,11 @@
 
 
 
-                <?php } ?>
+                <?php } } } else {
+                        // Redirect the user if he's going to this page without post id
+                        header("Location: index.php");
+                    }
+                     ?>
                 
                 
                 
