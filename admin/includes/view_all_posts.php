@@ -1,5 +1,7 @@
 <?php 
 
+include ("delete_modal.php");
+
 // Prevent the subscribers to access the view all posts page
 if (!is_admin( $_SESSION ['username'])){     
     header ("location: index.php"); 
@@ -148,7 +150,7 @@ if(isset($_POST['checkBoxArray'])) {
                                 echo "<td>{$post_views_count}</td>";
                                 echo "<td><a href='../post.php?p_id={$post_id}'>View Post</a></td>"; 
                                 echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>"; 
-                                echo "<td><a onClick=\"javascript: return confirm('Are you sure you want to delete this post?'); \" href='posts.php?delete={$post_id}'>Delete</a></td>";   
+                                echo "<td><a rel='$post_id' href='#' class='delete-link'>Delete</a></td>";   
                                 echo "</tr>";
                             } ?>
 
@@ -172,3 +174,17 @@ if(isset($_POST['checkBoxArray'])) {
                             </tbody>
 </table>
                         </form>
+
+
+                        <script>
+                            $(document).ready(function() {
+                                $(".delete-link").on('click', function(){
+                                   var id = $(this).attr("rel");;
+                                   var delete_url = "posts.php?delete="+ id+" ";
+                                    $(".modal_delete_link").attr("href", delete_url);
+                                    $("#myModal").modal('show');
+                                })
+                            });
+
+
+                        </script>
