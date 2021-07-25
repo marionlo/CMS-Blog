@@ -39,6 +39,9 @@
                     <li>
                         <a href="registration.php">Register</a>
                     </li>
+                    <li>
+                        <a href="contact.php">Contact</a>
+                    </li>
 
                     <?php 
                    if (session_status() == PHP_SESSION_NONE) session_start();
