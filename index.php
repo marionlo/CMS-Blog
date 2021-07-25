@@ -19,7 +19,7 @@
             
 
             <?php 
-            // Check if the page is set
+            // Pagination - Check if the page is set
             if(isset($_GET['page'])) {
             // Take the value from the page
                 $page = $_GET['page'];
@@ -28,7 +28,7 @@
                 $page = "";
             }
 
-            // Check if the page is set to an emptry string or number one, it means that we are on the homepage
+            // Check if the page is set to an empty string or number one, it means that we are on the homepage
             if($page == "" || $page == 1) {
                 $page_1 = 0;
             //  If the page is not the homepage, we calculate the variable page_1 to limit the number of posts displayed
@@ -81,7 +81,7 @@
                 <hr>
 
                     <?php } if (mysqli_num_rows($select_all_posts_query)==0) {
-                            echo "<h1 class='text-center'>There is no post published yet</h1>";
+                            echo "<h1 class='text-center'>No Posts available</h1>";
                             // Displays a message if there is no post published yet
                         } ?>
 

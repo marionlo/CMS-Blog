@@ -23,7 +23,7 @@
                 $post_category_id = $_GET['category'];
             }
             
-            $query = "SELECT * FROM posts WHERE post_category_id = $post_category_id ";
+            $query = "SELECT * FROM posts WHERE post_category_id = $post_category_id AND post_status= 'published' ";
             $select_all_posts_query = mysqli_query($connection, $query);
 
                     while($row = mysqli_fetch_assoc($select_all_posts_query)) {
@@ -58,7 +58,10 @@
 
 
 
-                    <?php } ?>
+                    <?php } if (mysqli_num_rows($select_all_posts_query)==0) {
+                            echo "<h1 class='text-center'>No Posts available</h1>";
+                            // Displays a message if there is no post published yet
+                        } ?>
 
             </div>
 
