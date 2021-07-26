@@ -49,19 +49,30 @@
                     
                     
                     ?>
-                    <?php if(isset($_SESSION['user_role'])) {
-                    echo "<li>
-                            <a href='admin'>Admin</a>
-                        </li>";
-
-                            } ?>
-                  
-                    <li class='<?php echo $registration_class ?>'>
-                        <a href="registration">Register</a>
-                    </li>
+                    
                     <li class='<?php echo $contact_class ?>'>
                         <a href="contact">Contact</a>
                     </li>
+                    <?php if(isLoggedin()):?>
+                        <li>
+                            <a href='admin'>Admin</a>
+                        </li>
+                        <li>
+                            <a href='includes/logout.php'>Logout</a>
+                        </li>
+                        
+                    <?php else: ?>
+                        <li class='<?php echo $registration_class ?>'>
+                        <a href="registration">Register</a>
+                    </li>
+                        <li class='<?php echo $contact_class ?>'>
+                        <a href='login.php'>Login</a>
+                    </li>"
+                    <?php endif; ?>
+                  
+                   
+
+                   
 
                     <?php 
                    if (session_status() == PHP_SESSION_NONE) session_start();

@@ -7,7 +7,8 @@ function confirm($result) {
 }
 
 function redirect($location) {
-    return header("Location:" . $location);
+    header("Location:" . $location);
+    exit;
 }
 
 function escape($string) {
@@ -15,6 +16,27 @@ function escape($string) {
     return mysqli_real_escape_string($connection, trim($string));
 }
 
+function ifItIsMethod($method=null) {
+    if($_SERVER['REQUEST_METHOD'] === strtoupper($method)) {
+        return true;
+    }
+
+    return false;  
+}
+
+function isLoggedIn() {
+    if(isset($_SESSION['user_role'])) {
+        return true;
+    }
+
+        return false;
+}
+
+function checkIfUserLoggedInAndRedirect($redirectLocation=null) {
+    if(isLoggedIn()) {
+        redirect($redirectLocation);
+    }
+}
 
 // Displays the data for the panels on the index of the Dashboard
 function recordCount($table) {
@@ -172,20 +194,22 @@ function login_user($username, $password) {
         $db_user_lastname = $row['user_lastname'];
         $db_user_role = $row['user_role'];
         $db_user_password = $row['password'];
+
+        if(password_verify($password, $db_user_password)) {
+            $_SESSION['username'] = $db_username;
+            $_SESSION['firstname'] = $db_user_firstname;
+            $_SESSION['lastname'] = $db_user_lastname;
+            $_SESSION['user_role'] = $db_user_role;
+    
+            redirect("/cms/admin");
+    
+        } else {
+            return false;
+        }
         
     }
   
-    if(password_verify($password, $db_user_password)) {
-        $_SESSION['username'] = $db_username;
-        $_SESSION['firstname'] = $db_user_firstname;
-        $_SESSION['lastname'] = $db_user_lastname;
-        $_SESSION['user_role'] = $db_user_role;
 
-        redirect("/cms/admin");
-
-    } else {
-        redirect("/cms/index.php");
-    }
 }
 
 
