@@ -15,6 +15,27 @@ function escape($string) {
     return mysqli_real_escape_string($connection, trim($string));
 }
 
+
+// Displays the data for the panels on the index of the Dashboard
+function recordCount($table) {
+    global $connection;
+    $query = "SELECT * FROM " . $table;
+    $send_all_posts = mysqli_query($connection, $query);
+    $result = mysqli_num_rows($send_all_posts);
+    confirm($result);
+    return $result;
+}
+
+// Displays the data for the graph on the index of the Dashboard
+function checkStatus($table, $columnName, $status) {
+    global $connection;
+    $query = "SELECT * FROM $table WHERE $columnName = '$status' ";
+    $result = mysqli_query($connection, $query);
+    return mysqli_num_rows($result);
+
+}
+
+
 // Add a category feature 
 function insert_categories() {
     global $connection;
@@ -46,8 +67,8 @@ function findAllCategories() {
      echo "<tr>";
      echo "<td>{$cat_id}</td>";   
      echo "<td>{$cat_title}</td>";
-     echo "<td><a href='categories.php?delete={$cat_id}'>Delete</a></td>";
-     echo "<td><a href='categories.php?edit={$cat_id}'>Edit</a></td>";
+     echo "<td><a href='categories.php?delete={$cat_id}' class='btn btn-danger'>Delete</a></td>";
+     echo "<td><a href='categories.php?edit={$cat_id}' class='btn btn-info'>Edit</a></td>";
      echo "</tr>";
 }
 
@@ -199,5 +220,8 @@ function users_online() {
 }
 
 users_online()
+
+
+
 
 ?>

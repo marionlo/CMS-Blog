@@ -46,9 +46,9 @@ if (!is_admin( $_SESSION ['username'])){
                                  echo "<td><a href='../post.php?p_id={$post_id}'>{$post_title}</a></td>";
                                           }
                                 echo "<td>{$comment_date}</td>";
-                                echo "<td><a href='comments.php?approve={$comment_id}'>Approve</a></td>"; 
-                                echo "<td><a href='comments.php?unapprove={$comment_id}'>Unapprove</a></td>";  
-                                echo "<td><a href='comments.php?delete={$comment_id}'>Delete</a></td>";  
+                                echo "<td><a href='comments.php?approve={$comment_id}' class='btn btn-success'>Approve</a></td>"; 
+                                echo "<td><a href='comments.php?unapprove={$comment_id}' class='btn btn-warning'>Unapprove</a></td>";  
+                                echo "<td><a href='comments.php?delete={$comment_id}' class='btn btn-danger'>Delete</a></td>";  
                                 echo "</tr>";
                             } ?>
 

@@ -17,10 +17,8 @@
           <input type="hidden" class="modal_delete_link" name="post_id" value="">
           <input class='btn btn-danger' type='submit' name='delete' value='Delete'>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        </form>
-       
+        </form>   
       </div>
     </div>
-
   </div>
 </div>
