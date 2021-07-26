@@ -13,8 +13,12 @@
         <p>Are you sure you want to delete this post?</p>
       </div>
       <div class="modal-footer">
-          <a href="" class="btn btn-danger modal_delete_link">Delete</a>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <form action ="posts.php" method="post">
+          <input type="hidden" class="modal_delete_link" name="post_id" value="">
+          <input class='btn btn-danger' type='submit' name='delete' value='Delete'>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </form>
+       
       </div>
     </div>
 

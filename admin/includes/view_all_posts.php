@@ -148,19 +148,31 @@ if(isset($_POST['checkBoxArray'])) {
                                 echo "<td><a href='post_comments.php?id=$post_id'>{$count_comments}</a></td>";
                                 echo "<td>{$post_date}</td>";
                                 echo "<td>{$post_views_count}</td>";
-                                echo "<td><a href='../post.php?p_id={$post_id}'>View Post</a></td>"; 
-                                echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>"; 
-                                echo "<td><a rel='$post_id' href='#' class='delete-link'>Delete</a></td>";   
+                                echo "<td><a href='../post.php?p_id={$post_id}' class='btn btn-primary'>View Post</a></td>"; 
+                                echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}' class='btn btn-info'>Edit</a></td>"; 
+                                ?>
+
+<form method="post">
+            <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+          <?php
+            echo "<td><input rel='$post_id' class='btn btn-danger delete_link' type='submit' name='delete' value='Delete'></td>";
+          ?>
+          </form>
+                                    
+                                </form>
+
+                                <?php 
+                                //echo "<td><a rel='$post_id' href='#' class='delete-link'>Delete</a></td>";   
                                 echo "</tr>";
                             } ?>
 
                             <?php 
                             
-                            if(isset($_GET['delete'])) {
+                            if(isset($_POST['delete'])) {
                                  // Prevent people from deleting when they are not logged in
                                     if(isset($_SESSION['user_role'])) {
                                     if($_SESSION['user_role'] == 'admin') {
-                                $the_post_id = mysqli_real_escape_string($connection, $_GET['delete']);
+                                $the_post_id = mysqli_real_escape_string($connection, $_POST['post_id']);
                                 $query = "DELETE FROM posts WHERE post_id = {$the_post_id} ";
                                 $delete_query = mysqli_query($connection, $query);
                                 header("Location: posts.php"); //This will refresh the page
@@ -177,14 +189,12 @@ if(isset($_POST['checkBoxArray'])) {
 
 
                         <script>
-                            $(document).ready(function() {
-                                $(".delete-link").on('click', function(){
-                                   var id = $(this).attr("rel");;
-                                   var delete_url = "posts.php?delete="+ id+" ";
-                                    $(".modal_delete_link").attr("href", delete_url);
-                                    $("#myModal").modal('show');
-                                })
-                            });
-
+                           $(".delete_link").on('click', function(e){
+                            e.preventDefault();
+                            let id = $(this).attr('rel');
+                            $('.modal_delete_link').val(id);
+                            $("#myModal").modal('show');
+                        })
 
                         </script>
+
