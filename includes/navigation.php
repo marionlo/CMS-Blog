@@ -27,7 +27,24 @@
                         $cat_title = $row['cat_title'];
                         $cat_id = $row['cat_id'];
 
-                        echo "<li><a href='category.php?category={$cat_id}'>{$cat_title}</a></>";
+                        // Add class active when the selected page is active
+                        $category_class = '';
+                        $registration_class = '';
+                        $contact_class = '';
+
+                        $page_name = basename($_SERVER['PHP_SELF']);
+                        $registration = "registration.php";
+                        $contact = "contact.php";
+
+                        if(isset($_GET['category']) && $_GET['category'] == $cat_id) {
+                            $category_class = 'active';
+                        } else if ($page_name == $registration) {
+                            $registration_class = 'active';
+                        } else if ($page_name == $contact) {
+                            $contact_class = 'active';
+                        }
+
+                        echo "<li class=$category_class><a href='category.php?category={$cat_id}'>{$cat_title}</a></>";
                     }
                     
                     
@@ -36,10 +53,10 @@
                     <li>
                         <a href="admin">Admin</a>
                     </li>
-                    <li>
+                    <li class='<?php echo $registration_class ?>'>
                         <a href="registration.php">Register</a>
                     </li>
-                    <li>
+                    <li class='<?php echo $contact_class ?>'>
                         <a href="contact.php">Contact</a>
                     </li>
 

@@ -37,7 +37,7 @@
             $select_all_posts_query = mysqli_query($connection, $query);
 
             if (mysqli_num_rows($select_all_posts_query)==0) {
-                echo "<h1 class='text-center'>No Posts available</h1>";
+                echo "<h1 class='text-center'>No Post available</h1>";
                 // Displays a message if there is no post published yet
             } else {
 
