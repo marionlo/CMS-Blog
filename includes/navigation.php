@@ -49,10 +49,13 @@
                     
                     
                     ?>
+                    <?php if(isset($_SESSION['user_role'])) {
+                    echo "<li>
+                            <a href='admin'>Admin</a>
+                        </li>";
 
-                    <li>
-                        <a href="admin">Admin</a>
-                    </li>
+                            } ?>
+                  
                     <li class='<?php echo $registration_class ?>'>
                         <a href="registration.php">Register</a>
                     </li>
