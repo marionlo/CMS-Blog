@@ -11,7 +11,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="./index.php">Blog and CMS</a>
+                <a class="navbar-brand" href="/cms">Blog and CMS</a>
             </div>
 
 
@@ -57,10 +57,10 @@
                             } ?>
                   
                     <li class='<?php echo $registration_class ?>'>
-                        <a href="registration.php">Register</a>
+                        <a href="registration">Register</a>
                     </li>
                     <li class='<?php echo $contact_class ?>'>
-                        <a href="contact.php">Contact</a>
+                        <a href="contact">Contact</a>
                     </li>
 
                     <?php 
