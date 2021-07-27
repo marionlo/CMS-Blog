@@ -7,7 +7,7 @@ function confirm($result) {
 }
 
 function redirect($location) {
-    header("Location:" . $location);
+    header("Location: " . $location);
     exit;
 }
 

@@ -1,5 +1,25 @@
-<div class="col-md-4">
+<?php 
 
+if(ifItIsMethod('post')){
+
+    if(isset($_POST['login'])) {
+
+        if(isset($_POST['username']) && isset($_POST['password'])){
+
+            login_user($_POST['username'], $_POST['password']);
+    
+        } else {
+    
+            redirect('index.php');
+        }
+    }
+    }
+
+   
+
+?>
+
+<div class="col-md-4">
 
 <!-- Blog Search Well -->
 <div class="well">
@@ -25,7 +45,7 @@
 
     <?php else:?>
         <h4>Login</h4>
-        <form action="login.php" method="post">
+        <form method="post">
         <div class="form-group">
             <input type="text" class="form-control" name="username" placeholder="Enter Username">
         </div>
@@ -34,6 +54,9 @@
             <span class="input-group-btn">
                 <button class="btn btn-primary" name="login" type="submit">Submit</button>
             </span> 
+        </div>
+        <div class="form-group">
+            <a href="forgot.php?forgot=<?php echo uniqid(true)?>">Forgot Password</a>
         </div>
     </form><!-- /Login form -->
     <!-- /.input-group -->
