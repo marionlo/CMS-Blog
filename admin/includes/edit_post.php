@@ -17,6 +17,7 @@ if(isset($_GET['p_id'])) {
       $post_content = $row['post_content']; 
       $post_comments = $row['post_comment_count'];
       $post_date = $row['post_date'];
+      $user_id = $row['user_id'];
      
       }
 
@@ -48,7 +49,7 @@ if(isset($_GET['p_id'])) {
 
          //Pass the variables from the form into the query
     $query = "UPDATE posts SET post_category_id='{$post_category_id}', post_title='{$post_title}', post_author='{$post_author}', ";
-    $query .="post_date=now(), post_image='{$post_image}', post_content='{$post_content}', post_tags='{$post_tags}', post_status='{$post_status}' WHERE post_id = {$the_post_id} ";
+    $query .="post_date=now(), post_image='{$post_image}', post_content='{$post_content}', post_tags='{$post_tags}', post_status='{$post_status}', user_id = {$user_id} WHERE post_id = {$the_post_id} ";
     //Send the query to the DB
     $update_post_query = mysqli_query($connection, $query);
 

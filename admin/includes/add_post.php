@@ -1,8 +1,9 @@
 <?php 
 $post_author = $_SESSION['username'];
+$user_id = $_SESSION['user_id'];
 if(isset($_POST['create_post'])) {
 
-  
+
     $post_author = escape($_POST['post_author']);
     $post_title =escape($_POST['post_title']);
     $post_category_id = escape($_POST['post_category']);
@@ -18,8 +19,8 @@ if(isset($_POST['create_post'])) {
 
 
     //Pass the variables from the form into the query
-    $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status) ";
-    $query .="VALUES({$post_category_id},'{$post_title}','{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_status}' ) ";
+    $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status, user_id) ";
+    $query .="VALUES({$post_category_id},'{$post_title}','{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_status}', {$user_id} ) ";
     //Send the query
     $create_post_query = mysqli_query($connection, $query);
 

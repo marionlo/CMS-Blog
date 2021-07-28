@@ -81,7 +81,7 @@ if(isset($_POST['edit_user'])) {
                     <div class="col-lg-12">
                         <h1 class="page-header">
                                 Welcome to admin
-                                <small><?php echo $_SESSION['username']; ?></small>
+                                <small><?php echo get_username(); ?></small>
                         </h1>
                             <form action="" method="post" enctype="multipart/form-data">
                             <div class="form-group">

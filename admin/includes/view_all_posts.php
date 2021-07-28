@@ -2,10 +2,10 @@
 
 include ("delete_modal.php");
 
-// Prevent the subscribers to access the view all posts page
-if (!is_admin( $_SESSION ['username'])){     
-    header ("location: index.php"); 
-}
+// // Prevent the subscribers to access the view all posts page
+// if (!is_admin( $_SESSION ['username'])){     
+//     header ("location: index.php"); 
+// }
 
 if(isset($_POST['checkBoxArray'])) {
     foreach($_POST['checkBoxArray'] as $postValueId){
@@ -127,30 +127,18 @@ if(isset($_POST['checkBoxArray'])) {
                                 echo "<td>{$post_id}</td>";   
                                 echo "<td>{$post_author}</td>";
                                 echo "<td>{$post_title}</td>";
-                                
-                                 // Display the categories on the table 
-                                // $query = "SELECT * FROM categories WHERE cat_id = $post_category_id ";
-                                //         $select_categories_id = mysqli_query($connection, $query);     
-                                //          while($row = mysqli_fetch_assoc($select_categories_id )) {
-                                //          $cat_title = $row['cat_title'];
-                                //          $cat_id = $row['cat_id'];
-
                                 echo "<td>{$cat_title}</td>";
-                                        //  }
-                                        
                                 echo "<td>{$post_status}</td>";
                                 echo "<td><img src='../images/$post_image'  width='100' alt='{$post_title}'/></td>";
                                 echo "<td>{$post_tags}</td>";
 
-                                // Display the number of comments and fetch the comments from each posts
-                                $query = "SELECT * FROM comments WHERE comment_post_id = $post_id ";
+                                $query = "SELECT * FROM comments WHERE comment_post_id = $post_id";
                                 $send_comment_query = mysqli_query($connection, $query);
-                                
                                 $row = mysqli_fetch_array($send_comment_query);
                                 $comment_id = $row['comment_id'];
                                 $count_comments = mysqli_num_rows($send_comment_query);
-
-                                echo "<td><a href='post_comments.php?id=$post_id'>{$count_comments}</a></td>";
+                    
+                                echo "<td><a href='post_comments.php?id=$post_id'>$count_comments</a></td>";
                                 echo "<td>{$post_date}</td>";
                                 echo "<td>{$post_views_count}</td>";
                                 echo "<td><a href='../post.php?p_id={$post_id}' class='btn btn-primary'>View Post</a></td>"; 

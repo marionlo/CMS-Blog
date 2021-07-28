@@ -1,6 +1,5 @@
 <?php include "includes/admin_header.php" ?>
 
-
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -14,9 +13,9 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Welcome to admin 
+                            Welcome to Admin Dashboard
                            
-                            <small> <?php echo get_username(); ?></small>
+                            <small> <?php echo $_SESSION['username']; ?></small>
                         </h1>
                        
                     </div>
@@ -26,7 +25,7 @@
                 <!-- /.row -->
                 
 <div class="row">
-    <div class="col-lg-4 col-md-6">
+    <div class="col-lg-3 col-md-6">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <div class="row">
@@ -34,8 +33,8 @@
                         <i class="fa fa-file-text fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">                             
-                            <div class='huge'><?php echo $posts_count =  count_records(get_all_user_posts());?></div>
-                        <div> My Posts</div>
+                            <div class='huge'><?php echo $posts_count = recordCount('posts');?></div>
+                        <div>Posts</div>
                     </div>
                 </div>
             </div>
@@ -48,7 +47,7 @@
             </a>
         </div>
     </div>
-    <div class="col-lg-4 col-md-6">
+    <div class="col-lg-3 col-md-6">
         <div class="panel panel-green">
             <div class="panel-heading">
                 <div class="row">
@@ -56,8 +55,8 @@
                         <i class="fa fa-comments fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                    <div class='huge'><?php echo $comments_count =  count_records(get_all_posts_user_comments());?></div>                 
-                      <div> My Comments</div>
+                    <div class='huge'><?php echo $comments_count = recordCount('comments');?></div>                 
+                      <div>Comments</div>
                     </div>
                 </div>
             </div>
@@ -70,8 +69,29 @@
             </a>
         </div>
     </div>
-
-    <div class="col-lg-4 col-md-6">
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-user fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                    <div class='huge'><?php echo $users_count = recordCount('users');?></div>
+                        <div> Users</div>
+                    </div>
+                </div>
+            </div>
+            <a href="users.php">
+                <div class="panel-footer">
+                    <span class="pull-left">View Details</span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
         <div class="panel panel-red">
             <div class="panel-heading">
                 <div class="row">
@@ -79,8 +99,8 @@
                         <i class="fa fa-list fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                    <div class='huge'><?php echo $categories_count = count_records(get_all_user_categories());?></div>       
-                         <div>My Categories</div>
+                    <div class='huge'><?php echo $categories_count = recordCount('categories');?></div>       
+                         <div>Categories</div>
                     </div>
                 </div>
             </div>
@@ -98,11 +118,11 @@
 
                 <?php 
                  
-                 $posts_draft_count =  count_records(get_all_user_draft_posts());
-                 $posts_published_count = count_records(get_all_user_published_posts());
-                 $approved_comments = count_records(get_all_user_approved_posts_comments());
-                 $unapproved_comments = count_records(get_all_user_unapproved_posts_comments());
-                 
+                 $posts_draft_count = checkStatus('posts', 'post_status', 'draft');
+                 $posts_published_count = checkStatus('posts', 'post_status', 'published');
+                 $unapproved_comments = checkStatus('comments', 'comment_status', 'unapproved');
+                 $subscribers_count = checkStatus('users', 'user_role', 'subscriber');             
+                
                 ?>
 
 
@@ -117,10 +137,10 @@
                         ['Data', 'Count'],
                         <?php 
                         
-                        $element_text = ['My Posts','My Published Posts', 'My Draft Posts', 'My Comments','My Approved Comments', 'My Unapproved Comments', 'My Categories'];
-                        $element_count = [$posts_count, $posts_published_count, $posts_draft_count, $comments_count, $approved_comments, $unapproved_comments, $categories_count];
+                        $element_text = ['My Posts','Published Posts', 'Draft Posts', 'Comments', 'Unapproved Comments', 'Users', 'Subscribers', 'Categories'];
+                        $element_count = [$posts_count, $posts_published_count, $posts_draft_count, $comments_count, $unapproved_comments, $users_count, $subscribers_count, $categories_count];
 
-                        for($i=0; $i<6; $i++) {
+                        for($i=0; $i<7; $i++) {
                             echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
                         }
                         

@@ -78,6 +78,10 @@
             $view_query = "UPDATE posts SET post_views_count = post_views_count+1 WHERE post_id =  $the_post_id ";
             $send_query = mysqli_query($connection, $view_query);
 
+            // Update the number of comments
+            $query = "UPDATE posts SET post_comment_count = post_comment_count+1 WHERE post_id =  $the_post_id ";
+            $send_query = mysqli_query($connection, $query);
+
             if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
                  // Make the query to the DB to fetch the required post
             $query = "SELECT * FROM posts WHERE post_id = $the_post_id ";

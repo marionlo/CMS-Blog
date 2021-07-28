@@ -1,4 +1,7 @@
 <?php 
+
+// DATABASE HELPERS FUNCTIONS
+
 function confirm($result) {
     global $connection; 
     if(!$result) {
@@ -15,6 +18,48 @@ function escape($string) {
     global $connection;
     return mysqli_real_escape_string($connection, trim($string));
 }
+
+function query($query) {
+    global $connection;
+    $result = mysqli_query($connection, $query);
+    confirm($result);
+    return $result;
+}
+
+function fetchRecords($result) {
+    return mysqli_fetch_array($result);
+}
+
+function count_records($result){
+    return mysqli_num_rows($result);
+}
+
+// DATABASE HELPERS FUNCTIONS END
+
+// GENERAL HELPERS
+
+function get_username() {
+   return isset($_SESSION['username']) ? $_SESSION['username'] : null;
+}
+
+
+// AUTH HELPER
+function is_admin() {
+     
+    if(isLoggedIn()) {
+        $result = query("SELECT user_role FROM users WHERE user_id =" .$_SESSION['user_id']."");
+        $row = fetchRecords($result);
+        if($row['user_role'] == 'admin') {
+            return true;
+        } else {
+            return false;
+        }
+    } return false;
+}
+
+
+
+
 
 function ifItIsMethod($method=null) {
     if($_SERVER['REQUEST_METHOD'] === strtoupper($method)) {
@@ -72,6 +117,46 @@ function recordCount($table) {
     return $result;
 }
 
+// FETCH DATA FOR THE INDEX DASHBOARD PAGE
+
+// Displays the data for the panels on the index of the Dashboard for a specific user
+function get_all_user_posts(){
+    return query("SELECT * FROM posts WHERE user_id=".loggedInUserId()."");
+}
+
+function get_all_posts_user_comments(){
+    return query("SELECT * FROM posts INNER JOIN comments ON posts.post_id = comments.comment_post_id WHERE user_id=".loggedInUserId()."");
+
+}
+
+function get_all_user_categories(){
+    return query("SELECT * FROM categories WHERE user_id=".loggedInUserId()."");
+}
+
+function get_all_user_published_posts(){
+    return query("SELECT * FROM posts WHERE user_id=".loggedInUserId()." AND post_status='published'");
+}
+
+function get_all_user_draft_posts(){
+    return query("SELECT * FROM posts WHERE user_id=".loggedInUserId()." AND post_status='draft'");
+}
+
+function get_all_user_approved_posts_comments(){
+    return query("SELECT * FROM posts
+    INNER JOIN comments ON posts.post_id = comments.comment_post_id
+    WHERE user_id=".loggedInUserId()." AND comment_status='approved'");
+}
+
+
+function get_all_user_unapproved_posts_comments(){
+    return query("SELECT * FROM posts
+    INNER JOIN comments ON posts.post_id = comments.comment_post_id
+    WHERE user_id=".loggedInUserId()." AND comment_status='unapproved'");
+}
+
+
+
+
 // Displays the data for the graph on the index of the Dashboard
 function checkStatus($table, $columnName, $status) {
     global $connection;
@@ -84,24 +169,23 @@ function checkStatus($table, $columnName, $status) {
 
 // Add a category feature 
 function insert_categories() {
-    global $connection;
-    if(isset($_POST['submit'])) {
-        $cat_title = escape($_POST['cat_title']);
-
-        if($cat_title == "" || empty($cat_title)) {
-            echo "This field should not be empty";
-        } else {
-            $stmt = mysqli_prepare($connection, "INSERT INTO categories(cat_title) VALUES(?) ");
-            mysqli_stmt_bind_param($stmt, "s", $cat_title);
-            mysqli_stmt_execute($stmt);
-
-            if(!$stmt) {
+                global $connection;
+                 if(isset($_POST['submit'])) {
+                $cat_title = $_POST['cat_title'];  
+                if($cat_title == "" || empty($cat_title)) {
+                echo "This field should not be empty";
+                } else {
+                $user_id = loggedInUserId();
+                $stmt = mysqli_prepare($connection,"INSERT INTO categories(cat_title,user_id) VALUES(?,?) ");
+                mysqli_stmt_bind_param($stmt, 'si',$cat_title,$user_id);
+                mysqli_stmt_execute($stmt);
+                if(!$stmt) {
                 die('QUERY FAILED' . mysqli_error($connection));
+                header("Location: categories.php");  
+                 }   
             }
         }
-        mysqli_stmt_close($stmt);
     }
-}
 
 function findAllCategories() {
     global $connection;
@@ -130,22 +214,7 @@ function deleteCategories() {
     }
 }
 
-function is_admin($username) {
-    global $connection;
 
-    $query ="SELECT user_role FROM users WHERE username ='$username' ";
-    $result = mysqli_query($connection, $query);
-    confirm($result);
-
-    $row = mysqli_fetch_array($result);
-
-    if($row['user_role'] == 'admin') {
-        return true;
-    } else {
-        return false;
-    }
-
-}
 
 function username_exists($username){
     global $connection;
@@ -220,6 +289,7 @@ function login_user($username, $password) {
         $db_user_password = $row['password'];
 
         if(password_verify($password, $db_user_password)) {
+            $_SESSION['user_id'] =  $db_user_id;
             $_SESSION['username'] = $db_username;
             $_SESSION['firstname'] = $db_user_firstname;
             $_SESSION['lastname'] = $db_user_lastname;

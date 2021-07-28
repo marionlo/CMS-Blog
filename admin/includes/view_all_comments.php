@@ -62,6 +62,9 @@ if (!is_admin( $_SESSION ['username'])){
                                 $the_comment_id = mysqli_real_escape_string($connection, $_GET['delete']);
                                 $query = "DELETE FROM comments WHERE comment_id = {$the_comment_id} ";
                                 $delete_query = mysqli_query($connection, $query);
+                                $query2 = "UPDATE posts SET post_comment_count = post_comment_count - 1 ";
+                                $query2 .= "WHERE post_id = $comment_post_id ";
+                                $update_query = mysqli_query($connection,$query2);
                                 header("Location: comments.php"); //This will refresh the page
                             }
                         }
