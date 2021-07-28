@@ -116,9 +116,18 @@
                 <img class="img-responsive" src="images/<?php echo $post_image ?>" alt="">
                 <hr>
                 <p><?php echo $post_content ?></p>
+                <?php 
+                
+                if(isLoggedIn()){ ?>
                 <div class="row">
                 <p class="pull-right"><a class="<?php echo userLikePost($the_post_id) ? 'unlike' : 'like'; ?>" href="post/<?php echo $the_post_id ?>"><span class="glyphicon <?php echo userLikePost($the_post_id) ? 'glyphicon-thumbs-down' : 'glyphicon-thumbs-up'; ?> "></span><?php echo userLikePost($the_post_id) ? ' Unlike' : ' Like'; ?></a></p>
                 </div>
+                <?php } else { ?>
+                    <div class="row">
+                    <h4 class="pull-right font-weight-bold">You need to <a href="login.php">Login</a> to like the post.</h4>
+                </div>
+               <?php } ?>
+
                 
                 <div class="row">
                    <p class="pull-right">Likes : <?php fetchLikes($the_post_id) ?></p> 
