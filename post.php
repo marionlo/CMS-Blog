@@ -245,7 +245,7 @@
    <script>
      // JQUERY is used header with AJAX for the "LIKE button"
   var post_id = <?php echo $the_post_id; ?>;
-  var user_id = 0;
+  var user_id = <?php echo loggedInUserId(); ?>;
 
   
  // Like the post
