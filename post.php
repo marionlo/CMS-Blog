@@ -3,6 +3,59 @@
     <!-- Navigation -->
     <?php include "includes/navigation.php"; ?>
 
+    <?php 
+    // LIKE THE POST
+    if(isset($_POST['liked'])) {
+        
+        // Select the post
+        $post_id = $_POST['post_id'];
+        $user_id = $_POST['user_id'];
+        $query = "SELECT * FROM posts WHERE post_id = $post_id";
+        $searchPostQuery = mysqli_query($connection, $query);
+        $row = mysqli_fetch_array($searchPostQuery);
+        $likes = $row['likes'];
+
+        if(mysqli_num_rows( $searchPostQuery) >= 1) {
+            echo $_POST['post_id'];
+        }
+        // Update post table with likes
+        mysqli_query($connection, "UPDATE posts SET likes = $likes +1 WHERE post_id = $post_id");
+
+        // Update Likes table with user_id and post_id
+        mysqli_query($connection, "INSERT INTO likes(user_id, post_id) VALUES($user_id, $post_id)");
+        exit();
+
+    }
+
+     // UNLIKE THE POST
+     if(isset($_POST['unliked'])) {
+        
+        // Select the post
+        $post_id = $_POST['post_id'];
+        $user_id = $_POST['user_id'];
+        $query = "SELECT * FROM posts WHERE post_id = $post_id";
+        $searchPostQuery = mysqli_query($connection, $query);
+        $row = mysqli_fetch_array($searchPostQuery);
+        $likes = $row['likes'];
+
+        if(mysqli_num_rows( $searchPostQuery) >= 1) {
+            echo $_POST['post_id'];
+        }
+        // Update Likes table with user_id and post_id
+        mysqli_query($connection, "DELETE FROM likes WHERE post_id = $post_id AND user_id=$user_id");
+
+        // Update post table with likes
+        mysqli_query($connection, "UPDATE posts SET likes = $likes -1 WHERE post_id = $post_id");
+        exit();
+
+    }
+    
+    
+    ?>
+
+
+
+
     <!-- Page Content -->
     <div class="container">
 
@@ -63,8 +116,18 @@
                 <img class="img-responsive" src="images/<?php echo $post_image ?>" alt="">
                 <hr>
                 <p><?php echo $post_content ?></p>
+                <div class="row">
+                <p class="pull-right"><a class="<?php echo userLikePost($the_post_id) ? 'unlike' : 'like'; ?>" href="post/<?php echo $the_post_id ?>"><span class="glyphicon <?php echo userLikePost($the_post_id) ? 'glyphicon-thumbs-down' : 'glyphicon-thumbs-up'; ?> "></span><?php echo userLikePost($the_post_id) ? ' Unlike' : ' Like'; ?></a></p>
+                </div>
                 
-
+                <div class="row">
+                   <p class="pull-right">Likes : <?php fetchLikes($the_post_id) ?></p> 
+                </div>
+ 
+                <div class="clearfix">
+                    
+                </div>
+                   
                 <hr>
 
 
@@ -159,8 +222,8 @@
 
                 <?php } } } else {
                         // Redirect the user if he's going to this page without post id
-                        header("Location: index.php");
-                    }
+                        header("Location: index.php"); }
+                    
                      ?>
                 
                 
@@ -178,3 +241,43 @@
         <hr>
    <!-- Footer -->
    <?php include "includes/footer.php"; ?>
+
+   <script>
+     // JQUERY is used header with AJAX for the "LIKE button"
+  var post_id = <?php echo $the_post_id; ?>;
+  var user_id = 0;
+
+  
+ // Like the post
+  $('.like').click(function(e) {
+
+    
+    $.ajax({
+      url: "post.php?p_id=" + post_id,
+      type: 'POST',
+      data: {
+        liked: 1,
+        post_id: post_id,
+        user_id: user_id
+      }, 
+    });
+    
+  });
+
+  // Unlike the post
+   // Like the post
+   $('.unlike').click(function(e) {
+    
+    $.ajax({
+      url: "post.php?p_id=" + post_id,
+      type: 'POST',
+      data: {
+        unliked: 1,
+        post_id: post_id,
+        user_id: user_id
+      }, 
+    });
+    
+  });
+
+   </script>
