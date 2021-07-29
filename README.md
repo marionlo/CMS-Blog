@@ -25,3 +25,11 @@ Simple blogging website with Content Management System mainly written in PHP.
 
 ## Screenshots
 ![Image of CMS-Blog](https://github.com/marionlo/CMS-Blog/blob/main/Screenshots/01-homepage.png)
+![Image of CMS-Blog](https://github.com/marionlo/CMS-Blog/blob/main/Screenshots/02-article-page.png)
+![Image of CMS-Blog](https://github.com/marionlo/CMS-Blog/blob/main/Screenshots/03-dashboard-homepage.png)
+![Image of CMS-Blog](https://github.com/marionlo/CMS-Blog/blob/main/Screenshots/04-dashboard-comments.png)
+![Image of CMS-Blog](https://github.com/marionlo/CMS-Blog/blob/main/Screenshots/05-dashboard-cats.png)
+![Image of CMS-Blog](https://github.com/marionlo/CMS-Blog/blob/main/Screenshots/06-dashboard-posts.png)
+![Image of CMS-Blog](https://github.com/marionlo/CMS-Blog/blob/main/Screenshots/07-dashboard-add-posts.png)
+![Image of CMS-Blog](https://github.com/marionlo/CMS-Blog/blob/main/Screenshots/08-dashboard-users.png)
+![Image of CMS-Blog](https://github.com/marionlo/CMS-Blog/blob/main/Screenshots/09-dashboard-profile.png)
