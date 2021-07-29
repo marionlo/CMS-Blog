@@ -10,7 +10,7 @@ Simple blogging website with Content Management System mainly written in PHP.
 * phpMyAdmin
 * Bootstrap
 
-##Features 
+## Features 
 * Login
 * Register
 * Forget password
@@ -23,5 +23,5 @@ Simple blogging website with Content Management System mainly written in PHP.
 * Add/Edit/Promote/Delete Users
 * Edit Profile
 
-##Screenshots
+## Screenshots
 ![Image of CMS-Blog](https://github.com/marionlo/CMS-Blog/blob/main/Screenshots/01-homepage.png)
