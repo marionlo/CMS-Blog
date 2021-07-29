@@ -24,4 +24,4 @@ Simple blogging website with Content Management System mainly written in PHP.
 * Edit Profile
 
 ##Screenshots
-![Image of CMS-Blog](https://marionlo.github.com/screenshots/01-homepage.png)
+![Image of CMS-Blog](https://github.com/marionlo/CMS-Blog/blob/main/Screenshots/01-homepage.png)
