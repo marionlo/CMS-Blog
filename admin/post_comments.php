@@ -74,43 +74,13 @@ if (!is_admin( $_SESSION ['username'])){
                             <?php 
                             
                             // DELETE COMMENT
-                            if(isset($_GET['delete'])) {
-                                // Prevent people from deleting when they are not logged in
-                                if(isset($_SESSION['user_role'])) {
-                                    if($_SESSION['user_role'] == 'admin') {
-                                $the_comment_id =  escape($_GET['delete']);
-                                $query = "DELETE FROM comments WHERE comment_id = {$the_comment_id} ";
-                                $delete_query = mysqli_query($connection, $query);
-                                header("Location: post_comments.php?id=". $_GET['id']. ""); //This will refresh the page
-                            }
-                        }
-                    }
+                            deleteComment();
 
                             //APPROVE COMMENT
-                            if(isset($_GET['approve'])) {
-                                // Prevent people from approving when they are not logged in
-                                if(isset($_SESSION['user_role'])) {
-                                    if($_SESSION['user_role'] == 'admin') {
-                                $the_comment_id = escape($_GET['approve']);
-                                $query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = {$the_comment_id} ";
-                                $unapprove_query = mysqli_query($connection, $query);
-                                header("Location: comments.php"); //This will refresh the page
-                            }
-                        }
-                    }
+                            approveComment();
 
                             // UNAPPROVE COMMENT
-                            if(isset($_GET['unapprove'])) {
-                                // Prevent people from unapproving when they are not logged in
-                                if(isset($_SESSION['user_role'])) {
-                                    if($_SESSION['user_role'] == 'admin') {
-                                $the_comment_id = escape($_GET['unapprove']);
-                                $query = "UPDATE comments SET comment_status = 'unapproved' WHERE comment_id = {$the_comment_id} ";
-                                $unapprove_query = mysqli_query($connection, $query);
-                                header("Location: comments.php"); //This will refresh the page
-                            }
-                        }
-                    }
+                            unapproveComment();
                             
                             
                             ?>

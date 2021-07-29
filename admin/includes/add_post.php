@@ -12,11 +12,9 @@ if(isset($_POST['create_post'])) {
     $post_image_temp = $_FILES['image']['tmp_name'];
     $post_tags = escape($_POST['post_tags']);
     $post_content = escape($_POST['post_content']);
-    // $post_comments = 4;
     $post_date = escape(date('d-m-y'));
 
     move_uploaded_file($post_image_temp, "../images/$post_image"); //Move the temporary file to the images folder
-
 
     //Pass the variables from the form into the query
     $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status, user_id) ";
@@ -50,9 +48,7 @@ if(isset($_POST['create_post'])) {
                 // Display the categories titles on the select option
                 $query = "SELECT * FROM categories ";
                 $select_categories = mysqli_query($connection, $query);   
-                
                 confirm($select_categories);
-
                 while($row = mysqli_fetch_assoc($select_categories )) {
                 $cat_title = $row['cat_title'];
                 $cat_id = $row['cat_id'];

@@ -39,32 +39,32 @@
                              ?>
                         </div>
 
-                    <div class="col-xs-6">
+                <div class="col-xs-6">
 
-                        <table class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Category Title</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            
-                            <?php if(is_admin()) {
-                                findAllCategories();
-                            } else {
-                                findAllUserCategories();
-                            }
-                                // Find all Categories and Display Categories Feature ?>
-                            <?php deleteCategories() //Delete the category ?>   
-             
-                            </tbody>
-                        </table>
-                    </div>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Category Title</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                         
-                    </div>
-                    </div>
-                <!-- /.row -->
+                        <?php if(is_admin()) {
+                            findAllCategories();
+                        } else {
+                            findAllUserCategories();
+                        }
+                            // Find all Categories and Display Categories Feature ?>
+                        <?php deleteCategories() //Delete the category ?>   
+            
+                        </tbody>
+                    </table>
+                </div>
+                    
+                </div>
+                </div>
+            <!-- /.row -->
 
             </div>
             <!-- /.container-fluid -->

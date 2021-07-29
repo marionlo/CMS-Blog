@@ -10,24 +10,24 @@
         <!-- Navigation -->
     <?php include "includes/admin_navigation.php" ?>
 
-        <div id="page-wrapper">
+<div id="page-wrapper">
 
-            <div class="container-fluid">
+    <div class="container-fluid">
 
-                <!-- Page Heading -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">
-                            Welcome to Admin Dashboard
-                           
-                            <small> <?php echo $_SESSION['username']; ?></small>
-                        </h1>
-                       
-                    </div>
-                    </div>
-                <!-- /.row -->
-                       
-                <!-- /.row -->
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Welcome to Admin Dashboard
+                    
+                    <small> <?php echo $_SESSION['username']; ?></small>
+                </h1>
+                
+            </div>
+        </div>
+        <!-- /.row -->
+                
+        <!-- /.row -->
                 
 <div class="row">
     <div class="col-lg-3 col-md-6">
@@ -121,53 +121,53 @@
 </div>
                 <!-- /.row -->
 
-                <?php 
-                 
-                 $posts_draft_count = checkStatus('posts', 'post_status', 'draft');
-                 $posts_published_count = checkStatus('posts', 'post_status', 'published');
-                 $unapproved_comments = checkStatus('comments', 'comment_status', 'unapproved');
-                 $subscribers_count = checkStatus('users', 'user_role', 'subscriber');             
-                
-                ?>
+<?php 
+    
+    $posts_draft_count = checkStatus('posts', 'post_status', 'draft');
+    $posts_published_count = checkStatus('posts', 'post_status', 'published');
+    $unapproved_comments = checkStatus('comments', 'comment_status', 'unapproved');
+    $subscribers_count = checkStatus('users', 'user_role', 'subscriber');             
+
+?>
 
 
-                <!-- Graph to display Blog Stats -->
-                <div class="row">
-                <script type="text/javascript">
-                    google.charts.load('current', {'packages':['bar']});
-                    google.charts.setOnLoadCallback(drawChart);
+<!-- Graph to display Blog Stats -->
+<div class="row">
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawChart);
 
-                    function drawChart() {
-                        var data = google.visualization.arrayToDataTable([
-                        ['Data', 'Count'],
-                        <?php 
-                        
-                        $element_text = ['My Posts','Published Posts', 'Draft Posts', 'Comments', 'Unapproved Comments', 'Users', 'Subscribers', 'Categories'];
-                        $element_count = [$posts_count, $posts_published_count, $posts_draft_count, $comments_count, $unapproved_comments, $users_count, $subscribers_count, $categories_count];
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+        ['Data', 'Count'],
+        <?php 
+        
+        $element_text = ['My Posts','Published Posts', 'Draft Posts', 'Comments', 'Unapproved Comments', 'Users', 'Subscribers', 'Categories'];
+        $element_count = [$posts_count, $posts_published_count, $posts_draft_count, $comments_count, $unapproved_comments, $users_count, $subscribers_count, $categories_count];
 
-                        for($i=0; $i<7; $i++) {
-                            echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
-                        }
-                        
-                        ?>
-                        
-                        ]);
+        for($i=0; $i<7; $i++) {
+            echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
+        }
+        
+        ?>
+        
+        ]);
 
-                        var options = {
-                        chart: {
-                            title: '',
-                            subtitle: '',
-                        }
-                        };
+        var options = {
+        chart: {
+            title: '',
+            subtitle: '',
+        }
+        };
 
-                        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
 
-                        chart.draw(data, google.charts.Bar.convertOptions(options));
-                    }
-               </script>
-                        <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
-                </div>
-            </div>
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+</script>
+        <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
+    </div>
+</div>
             <!-- /.container-fluid -->
 
         </div>

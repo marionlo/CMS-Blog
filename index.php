@@ -54,7 +54,7 @@
                         $post_author = $row['post_author'];
                         $post_date = $row['post_date'];
                         $post_image = $row['post_image'];
-                        $post_content = substr($row['post_content'],0,150);
+                        $post_content = substr($row['post_content'],0,300);
                         $post_status = $row['post_status'];
 
                         ?>

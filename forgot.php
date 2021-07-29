@@ -109,7 +109,7 @@ if(ifItIsMethod('post')) {
                                 <?php else: ?>
 
                                         <h2>Please check your mailbox.</h2>
-                                    <?php endIf; ?>
+                                    <?php endif; ?>
 
                         </div>
                     </div>

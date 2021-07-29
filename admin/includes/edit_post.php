@@ -1,63 +1,60 @@
 <?php 
-
-if(isset($_GET['p_id'])) {
-    $the_post_id = escape($_GET['p_id']);
-}
-        // Query the keys from the database and pass it to the form
-      $query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
-      $select_posts = mysqli_query($connection, $query);     
-      while($row = mysqli_fetch_assoc($select_posts)) {
-      $post_id = $row['post_id'];
-      $post_author = $row['post_author'];
-      $post_title = $row['post_title'];
-      $post_category_id = $row['post_category_id'];
-      $post_status = $row['post_status'];
-      $post_image = $row['post_image'];
-      $post_tags = $row['post_tags'];
-      $post_content = $row['post_content']; 
-      $post_comments = $row['post_comment_count'];
-      $post_date = $row['post_date'];
-      $user_id = $row['user_id'];
-     
+      if(isset($_GET['p_id'])) {
+          $the_post_id = escape($_GET['p_id']);
       }
 
+    // Query the keys from the database and pass it to the form
+    $query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
+    $select_posts = mysqli_query($connection, $query);     
+    while($row = mysqli_fetch_assoc($select_posts)) {
+    $post_id = $row['post_id'];
+    $post_author = $row['post_author'];
+    $post_title = $row['post_title'];
+    $post_category_id = $row['post_category_id'];
+    $post_status = $row['post_status'];
+    $post_image = $row['post_image'];
+    $post_tags = $row['post_tags'];
+    $post_content = $row['post_content']; 
+    $post_comments = $row['post_comment_count'];
+    $post_date = $row['post_date'];
+    $user_id = $row['user_id'];
+    
+    }
 
-      // Update the DB with the content of the edit page
-      if(isset($_POST['edit_post'])) {
-        $post_author = escape($_POST['post_author']);
-        $post_title = escape($_POST['post_title']);
-        $post_category_id = escape($_POST['post_category']);
-        $post_status = escape($_POST['post_status']); 
-        $post_image = $_FILES['image']['name'];
-        $post_image_temp = $_FILES['image']['tmp_name'];
-        $post_tags = escape($_POST['post_tags']);
-        $post_content = escape($_POST['post_content']);
 
-        move_uploaded_file($post_image_temp, "../images/$post_image"); //Move the temporary file to the images folder
+    // Update the DB with the content of the edit page
+    if(isset($_POST['edit_post'])) {
+      $post_author = escape($_POST['post_author']);
+      $post_title = escape($_POST['post_title']);
+      $post_category_id = escape($_POST['post_category']);
+      $post_status = escape($_POST['post_status']); 
+      $post_image = $_FILES['image']['name'];
+      $post_image_temp = $_FILES['image']['tmp_name'];
+      $post_tags = escape($_POST['post_tags']);
+      $post_content = escape($_POST['post_content']);
+
+      move_uploaded_file($post_image_temp, "../images/$post_image"); //Move the temporary file to the images folder
 
 
-        //If there's no new picture upload, keep the previous one
-        if(empty($post_image)) {
-            $query = "SELECT * FROM posts where post_id = $the_post_id ";
-            $select_image = mysqli_query($connection, $query);
+      //If there's no new picture upload, keep the previous one
+      if(empty($post_image)) {
+      $query = "SELECT * FROM posts where post_id = $the_post_id ";
+      $select_image = mysqli_query($connection, $query);
 
-            while($row = mysqli_fetch_array($select_image)) {
-                $post_image = $row['post_image'];
-            }
-
-        }
-
-         //Pass the variables from the form into the query
-    $query = "UPDATE posts SET post_category_id='{$post_category_id}', post_title='{$post_title}', post_author='{$post_author}', ";
-    $query .="post_date=now(), post_image='{$post_image}', post_content='{$post_content}', post_tags='{$post_tags}', post_status='{$post_status}', user_id = {$user_id} WHERE post_id = {$the_post_id} ";
-    //Send the query to the DB
-    $update_post_query = mysqli_query($connection, $query);
-
-    confirm($update_post_query);
-
-    echo "<p class='bg-success'>Your post has been updated. <a href='../post.php?p_id={$the_post_id}'>View Post</a> or <a href='posts.php'>Edit other Posts.</a> </p>";
-
+      while($row = mysqli_fetch_array($select_image)) {
+              $post_image = $row['post_image'];
       }
+      }
+
+      //Pass the variables from the form into the query
+      $query = "UPDATE posts SET post_category_id='{$post_category_id}', post_title='{$post_title}', post_author='{$post_author}', ";
+      $query .="post_date=now(), post_image='{$post_image}', post_content='{$post_content}', post_tags='{$post_tags}', post_status='{$post_status}', user_id = {$user_id} WHERE post_id = {$the_post_id} ";
+      //Send the query to the DB
+      $update_post_query = mysqli_query($connection, $query);
+      confirm($update_post_query);
+      echo "<p class='bg-success'>Your post has been updated. <a href='../post.php?p_id={$the_post_id}'>View Post</a> or <a href='posts.php'>Edit other Posts.</a> </p>";
+
+    }
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">

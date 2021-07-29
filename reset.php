@@ -3,19 +3,13 @@
 
 
 <?php
-
-
-
     if(!isset($_GET['email']) && !isset($_GET['token'])){
 
-
         redirect('index.php');
-
 
     }
 
 if($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM users WHERE token=?')){
-
 
     mysqli_stmt_bind_param($stmt, "s", $_GET['token']);
 
@@ -26,13 +20,6 @@ if($stmt = mysqli_prepare($connection, 'SELECT username, user_email, token FROM 
     mysqli_stmt_fetch($stmt);
 
     mysqli_stmt_close($stmt);
-
-
-//    if($_GET['token'] !== $token || $_GET['email'] !== $email){
-//
-//        redirect('index');
-//
-//    }
 
     if(isset($_POST['password']) && isset($_POST['confirmPassword'])){
 

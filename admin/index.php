@@ -14,8 +14,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Welcome to admin 
-                           
+                            Welcome to admin                   
                             <small> <?php echo get_username(); ?></small>
                         </h1>
                        
@@ -96,56 +95,56 @@
 </div>
                 <!-- /.row -->
 
-                <?php 
-                 
-                 $posts_draft_count =  count_records(get_all_user_draft_posts());
-                 $posts_published_count = count_records(get_all_user_published_posts());
-                 $approved_comments = count_records(get_all_user_approved_posts_comments());
-                 $unapproved_comments = count_records(get_all_user_unapproved_posts_comments());
-                 
-                ?>
+<?php 
+    
+    $posts_draft_count =  count_records(get_all_user_draft_posts());
+    $posts_published_count = count_records(get_all_user_published_posts());
+    $approved_comments = count_records(get_all_user_approved_posts_comments());
+    $unapproved_comments = count_records(get_all_user_unapproved_posts_comments());
+    
+?>
 
 
-                <!-- Graph to display Blog Stats -->
-                <div class="row">
-                <script type="text/javascript">
-                    google.charts.load('current', {'packages':['bar']});
-                    google.charts.setOnLoadCallback(drawChart);
+<!-- Graph to display Blog Stats -->
+<div class="row">
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawChart);
 
-                    function drawChart() {
-                        var data = google.visualization.arrayToDataTable([
-                        ['Data', 'Count'],
-                        <?php 
-                        
-                        $element_text = ['My Posts','My Published Posts', 'My Draft Posts', 'My Comments','My Approved Comments', 'My Unapproved Comments', 'My Categories'];
-                        $element_count = [$posts_count, $posts_published_count, $posts_draft_count, $comments_count, $approved_comments, $unapproved_comments, $categories_count];
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+        ['Data', 'Count'],
+        <?php 
+        
+        $element_text = ['My Posts','My Published Posts', 'My Draft Posts', 'My Comments','My Approved Comments', 'My Unapproved Comments', 'My Categories'];
+        $element_count = [$posts_count, $posts_published_count, $posts_draft_count, $comments_count, $approved_comments, $unapproved_comments, $categories_count];
 
-                        for($i=0; $i<6; $i++) {
-                            echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
-                        }
-                        
-                        ?>
-                        
-                        ]);
+        for($i=0; $i<6; $i++) {
+            echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
+        }
+        
+        ?>
+        
+        ]);
 
-                        var options = {
-                        chart: {
-                            title: '',
-                            subtitle: '',
-                        }
-                        };
+        var options = {
+        chart: {
+            title: '',
+            subtitle: '',
+        }
+        };
 
-                        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
 
-                        chart.draw(data, google.charts.Bar.convertOptions(options));
-                    }
-               </script>
-                        <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
-                </div>
-            </div>
-            <!-- /.container-fluid -->
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+</script>
+        <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
+</div>
+</div>
+<!-- /.container-fluid -->
 
-        </div>
-        <!-- /#page-wrapper -->
+</div>
+<!-- /#page-wrapper -->
 
     <?php include "includes/admin_footer.php" ?>
