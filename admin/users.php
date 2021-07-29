@@ -2,10 +2,10 @@
 
 <?php 
 // Redirect subscribers to the index if they are not admin
-if(!is_admin($_SESSION['username'])) {
-    header("Location: index.php");
-}
-
+if(!is_admin()) {
+    redirect("index.php");
+  }
+  
 
 ?>
 <div id="wrapper">

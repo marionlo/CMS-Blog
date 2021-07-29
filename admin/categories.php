@@ -50,7 +50,12 @@
                             </thead>
                             <tbody>
                             
-                            <?php findAllCategories() // Find all Categories and Display Categories Feature ?>
+                            <?php if(is_admin()) {
+                                findAllCategories();
+                            } else {
+                                findAllUserCategories();
+                            }
+                                // Find all Categories and Display Categories Feature ?>
                             <?php deleteCategories() //Delete the category ?>   
              
                             </tbody>

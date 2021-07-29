@@ -204,6 +204,23 @@ function findAllCategories() {
 
 }
 
+function findAllUserCategories() {
+    global $connection;
+    $query = "SELECT * FROM categories WHERE user_id=".loggedInUserId()."";
+    $select_categories = mysqli_query($connection, $query);     
+     while($row = mysqli_fetch_assoc($select_categories )) {
+     $cat_title = $row['cat_title'];
+     $cat_id = $row['cat_id'];
+     echo "<tr>";
+     echo "<td>{$cat_id}</td>";   
+     echo "<td>{$cat_title}</td>";
+     echo "<td><a href='categories.php?delete={$cat_id}' class='btn btn-danger'>Delete</a></td>";
+     echo "<td><a href='categories.php?edit={$cat_id}' class='btn btn-info'>Edit</a></td>";
+     echo "</tr>";
+}
+
+}
+
 function deleteCategories() {
     global $connection;
     if(isset($_GET['delete'])) {

@@ -97,8 +97,8 @@ if(isset($_POST['checkBoxArray'])) {
                             </thead>
                             <tbody>
                             <?php 
-                                // Display the posts on the table - latest created first
-                                //$query = "SELECT * FROM posts ORDER BY post_id DESC";
+                             if(is_admin()) {
+                                // Display all the posts on the table - latest created first
                                 $query = "SELECT posts.post_id, posts.post_author, posts.post_title, posts.post_category_id, posts.post_status, posts.post_image, ";
                                 $query .= "posts.post_tags, posts.post_comment_count, posts.post_date, posts.post_views_count, categories.cat_id, categories.cat_title ";
                                 $query .= "FROM posts ";
@@ -155,9 +155,69 @@ if(isset($_POST['checkBoxArray'])) {
                                 </form>
 
                                 <?php 
-                                //echo "<td><a rel='$post_id' href='#' class='delete-link'>Delete</a></td>";   
+                               
                                 echo "</tr>";
-                            } ?>
+                            } } else {
+                                
+                                // Display all the user posts on the table - latest created first
+                                $query = "SELECT posts.post_id, posts.post_author, posts.post_title, posts.post_category_id, posts.post_status, posts.post_image, ";
+                                $query .= "posts.post_tags, posts.post_comment_count, posts.post_date, posts.post_views_count, posts.user_id, categories.cat_id, categories.cat_title ";
+                                $query .= "FROM posts ";
+                                $query .= "LEFT JOIN categories ON posts.post_category_id = categories.cat_id WHERE posts.user_id = ".loggedInUserId()." ";
+                                $query .= "ORDER BY post_id DESC";
+                               
+
+                                $select_posts = mysqli_query($connection, $query);     
+                                while($row = mysqli_fetch_assoc($select_posts)) {
+                                $post_id = $row['post_id'];
+                                $post_author = $row['post_author'];
+                                $post_title = $row['post_title'];
+                                $post_category_id = $row['post_category_id'];
+                                $post_status = $row['post_status'];
+                                $post_image = $row['post_image'];
+                                $post_tags = $row['post_tags'];
+                                $post_comments = $row['post_comment_count'];
+                                $post_date = $row['post_date'];
+                                $post_views_count = $row['post_views_count'];           
+                                $cat_id = $row['cat_id'];
+                                $cat_title = $row['cat_title'];
+                                confirm($select_posts);
+                                ?>
+
+                                <tr>
+                                <td><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='<?php echo $post_id; ?>'></td>
+                                <?php
+                                echo "<td>{$post_id}</td>";   
+                                echo "<td>{$post_author}</td>";
+                                echo "<td>{$post_title}</td>";
+                                echo "<td>{$cat_title}</td>";
+                                echo "<td>{$post_status}</td>";
+                                echo "<td><img src='../images/$post_image'  width='100' alt='{$post_title}'/></td>";
+                                echo "<td>{$post_tags}</td>";
+
+                                $query = "SELECT * FROM comments WHERE comment_post_id = $post_id";
+                                $send_comment_query = mysqli_query($connection, $query);
+                                $row = mysqli_fetch_array($send_comment_query);
+                                $comment_id = $row['comment_id'];
+                                $count_comments = mysqli_num_rows($send_comment_query);
+                    
+                                echo "<td><a href='post_comments.php?id=$post_id'>$count_comments</a></td>";
+                                echo "<td>{$post_date}</td>";
+                                echo "<td>{$post_views_count}</td>";
+                                echo "<td><a href='../post.php?p_id={$post_id}' class='btn btn-primary'>View Post</a></td>"; 
+                                echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}' class='btn btn-info'>Edit</a></td>"; 
+                                ?>
+
+<form method="post">
+            <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+          <?php
+            echo "<td><input rel='$post_id' class='btn btn-danger delete_link' type='submit' name='delete' value='Delete'></td>";
+          ?>
+          </form>
+                                    
+                                </form>
+
+                         <?php   }} ?>
 
                             <?php 
                             

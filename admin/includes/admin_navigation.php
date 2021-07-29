@@ -41,8 +41,10 @@
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#posts_dropdown"><i class="fa fa-fw fa-arrows-v"></i> Posts <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="posts_dropdown" class="collapse">
+                      
 
                             <li><a href='posts.php'>View All Posts</a></li>
+                      
                             <li><a href='posts.php?source=add_post'>Add Post</a></li>
                         </ul>
                     </li>
@@ -52,7 +54,8 @@
                     <li>
                         <a href='comments.php'><i class='fa fa-fw fa-file'></i> Comments</a>
                     </li> 
-                    <li>
+                    <?php if(is_admin()): ?> 
+                        <li>
                         <a href='javascript:;' data-toggle='collapse' data-target='#users_dropdown'><i class='fa fa-fw fa-arrows-v'></i> Users <i class='fa fa-fw fa-caret-down'></i></a>
                         <ul id='users_dropdown' class='collapse'>
                             <li>
@@ -63,6 +66,8 @@
                             </li>
                         </ul>
                     </li>
+                        <?php endif ?>
+                   
                     <li>
                         <a href="profile.php"><i class="fa fa-fw fa-wrench"></i> Profile</a>
                     </li>

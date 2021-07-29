@@ -1,5 +1,10 @@
 <?php include "includes/admin_header.php" ?>
 
+<?php if(!is_admin()) {
+    redirect("index.php");
+}
+?>
+
     <div id="wrapper">
 
         <!-- Navigation -->
